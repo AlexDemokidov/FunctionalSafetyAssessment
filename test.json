@@ -1,0 +1,88 @@
+{
+    "project": [
+        {
+            "name": "R1",
+            "node1": "N002",
+            "node2": "0",
+            "value": "1000",
+            "type": "string",
+            "node3": "string",
+            "node4": "string",
+            "voltage": "string",
+            "current": "string",
+            "power": "string",
+            "failure_rate": "string",
+            "mtbf": "string"
+        },
+        {
+            "name": "R2",
+            "node1": "N001",
+            "node2": "N002",
+            "value": "2000",
+            "type": "string",
+            "node3": "string",
+            "node4": "string",
+            "voltage": "string",
+            "current": "string",
+            "power": "string",
+            "failure_rate": "string",
+            "mtbf": "string"
+        },
+        {
+            "name": "V1",
+            "node1": "N001",
+            "node2": "0",
+            "value": "10",
+            "type": "string",
+            "node3": "string",
+            "node4": "string",
+            "voltage": "string",
+            "current": "string",
+            "power": "string",
+            "failure_rate": "string",
+            "mtbf": "string"
+        },
+        {
+            "name": "R3",
+            "node1": "N003",
+            "node2": "N002",
+            "value": "2000",
+            "type": "string",
+            "node3": "string",
+            "node4": "string",
+            "voltage": "string",
+            "current": "string",
+            "power": "string",
+            "failure_rate": "string",
+            "mtbf": "string"
+        },
+        {
+            "name": "R4",
+            "node1": "N001",
+            "node2": "N003",
+            "value": "1000",
+            "type": "string",
+            "node3": "string",
+            "node4": "string",
+            "voltage": "string",
+            "current": "string",
+            "power": "string",
+            "failure_rate": "string",
+            "mtbf": "string"
+        },
+        {
+            "name": "R5",
+            "node1": "N003",
+            "node2": "0",
+            "value": "2000",
+            "type": "string",
+            "node3": "string",
+            "node4": "string",
+            "voltage": "string",
+            "current": "string",
+            "power": "string",
+            "failure_rate": "string",
+            "mtbf": "string"
+        }
+    ]
+}

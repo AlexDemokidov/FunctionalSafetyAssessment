@@ -1,0 +1,41 @@
+version: "3.9"
+
+services:
+
+  digital-twin-db:
+    container_name: digital-twin-db
+    build:  
+      context: ./digital-twin-db/
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - ./digital-twin-db/pg_data:/var/lib/postgresql/data
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+  digital-twin-ui:
+    container_name: digital-twin-ui
+    build:  
+      context: ./digital-twin-ui/
+    ports:
+      - 80:80
+
+  digital-twin-service:
+    container_name: digital-twin-service
+    build: 
+      context: ./digital-twin-service/
+    ports:
+      - 8000:8000
+    depends_on:
+      - digital-twin-db
+    environment:
+      DB_URL: postgresql://postgres:postgres@digital-twin-db:5432/postgres
+

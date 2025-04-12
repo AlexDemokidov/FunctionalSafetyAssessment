@@ -1,0 +1,14 @@
+fastapi
+uvicorn
+alembic
+black
+awscli
+cryptography
+pyjwt
+requests
+sqlalchemy
+uvicorn
+pyyaml
+psycopg2-binary
+jinja2
+PySpice

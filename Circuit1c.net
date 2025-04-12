@@ -1,0 +1,11 @@
+* C:\Users\demok\AppData\Local\LTspice\Draft1.asc
+R1 N002 0 100
+R2 N001 N002 250
+V1 N001 0 8
+R3 N003 N002 200
+R4 N001 N003 100
+R5 N003 0 200
+R7 N003 N002 100
+.op
+.backanno
+.end

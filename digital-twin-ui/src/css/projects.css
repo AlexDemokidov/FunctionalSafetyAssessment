@@ -1,0 +1,145 @@
+/* Projects */
+
+.body {
+    background-color: rgb(230, 231, 232);
+}
+
+.projects {
+    height: 100vh;
+}
+
+.projects__section {
+
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    height: 93vh;
+    justify-content: center;
+    background: url(../img/motherboard.jpg) no-repeat;
+    background-size: cover;
+    background-size: 100% 100%;
+    margin-bottom: 0;
+}
+
+.projects__title {
+    margin-bottom: 0;
+}
+
+.projects__form {
+    background: white;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.projects__container {
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 5px;
+    gap: 5px;
+    justify-content: center;
+}
+
+.projects__field {
+    border-radius: 10px;
+    box-shadow:
+        inset 0 -3em 3em rgba(0, 0, 0, 0.1),
+        0 0 0 2px hsl(204, 75%, 26%),
+        0.3em 0.3em 1em rgba(0, 0, 0, 0.9);
+    padding: 20px 50px 20px 20px;
+    background: var(--medium-blue);
+    max-width: 400px;
+    margin: 20px;
+    color: black;
+    position: relative;
+}
+
+button {
+    margin: 20px;
+    font-size: large;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.projects__input {
+
+    padding: 12px 10px 10px 35px;
+    border-radius: 6px;
+    font-size: 19px;
+}
+
+.projects__netlist {
+    width: 400px;
+    height: 400px;
+}
+
+
+.projects__delete {
+    position: absolute;
+    top: 1px;
+    right: 1px;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.modal-body {
+    position: fixed;
+    top: 3em;
+    bottom: 3em;
+    right: 20%;
+    left: 20%;
+    padding: 2em 3em;
+    background-color: white;
+    overflow: auto;
+    z-index: 5;
+}
+
+.modal-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0.3em;
+    font-size: 2em;
+    height: 1.5em;
+    width: 1.5em;
+    cursor: pointer;
+    border: 0;
+}
+
+.modal-close::before {
+    display: block;
+    content: "\00D7";
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+}
+
+.modal-netlist {
+    display: flex;
+    align-items: center;
+}
