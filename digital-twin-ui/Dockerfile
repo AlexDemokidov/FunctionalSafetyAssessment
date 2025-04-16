@@ -1,6 +1,6 @@
 FROM node:18-alpine
 WORKDIR /app
-EXPOSE 80
+EXPOSE 5173
 COPY package.json package-lock.json .
 RUN npm install --silent
 COPY . .

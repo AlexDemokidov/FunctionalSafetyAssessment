@@ -1,4 +1,5 @@
 /* Global */
+@import "tailwindcss";
 
 html {
 	--brand-green: hsl(162, 87%, 21%);

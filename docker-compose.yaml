@@ -2,8 +2,8 @@ version: "3.9"
 
 services:
 
-  digital-twin-db:
-    container_name: digital-twin-db
+  fsa-db:
+    container_name: fsa-db
     build:  
       context: ./digital-twin-db/
     environment:
@@ -21,21 +21,21 @@ services:
     ports:
       - 8080:8080
 
-  digital-twin-ui:
-    container_name: digital-twin-ui
-    build:  
-      context: ./digital-twin-ui/
-    ports:
-      - 80:80
+  # fsa-ui:
+  #   container_name: fsa-ui
+  #   build:  
+  #     context: ./digital-twin-ui/
+  #   ports:
+  #     - 80:5173
 
-  digital-twin-service:
-    container_name: digital-twin-service
+  fsa-service:
+    container_name: fsa-service
     build: 
       context: ./digital-twin-service/
     ports:
       - 8000:8000
     depends_on:
-      - digital-twin-db
+      - fsa-db
     environment:
-      DB_URL: postgresql://postgres:postgres@digital-twin-db:5432/postgres
+      DB_URL: postgresql://postgres:postgres@fsa-db:5432/postgres
 

@@ -1,3 +1,4 @@
+import { Button, Form, Input, Select, Space } from 'antd';
 function Projects(props) {
 
     let { projects } = props;
@@ -12,7 +13,7 @@ function Projects(props) {
                             <div className="projects__field" key={project.id}>
                                 <h3 className="number">Номер проекта: {project.id}</h3>
                                 <h3 className="number">Дата создания: {project.created}</h3>
-                                <button id={project.id} onClick={props.onClick} >Открыть </button>
+                                <Button type="default" id={project.id} onClick={props.onClick} >Открыть </Button>
                                 {/* <button id={project.id} className="projects__delete" onClick={props.deleteProject} >X </button> */}
                             </div>
                         ))}

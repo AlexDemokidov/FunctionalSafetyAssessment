@@ -4,7 +4,7 @@ function Header(props) {
         <>
             <header>
                 <nav className="nav-container">
-                    <div className="nav-container__inner">
+                    <div className="nav-container__inner items-center">
                         <a href="http://localhost/">
                             <img className="header__logo" src="/src/img/digital-twin.png" alt="Логотип Digital Twin" />
                         </a>
