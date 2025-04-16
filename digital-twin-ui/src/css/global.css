@@ -53,12 +53,12 @@ h4 {
 	font-family: Georgia, serif;
 }
 
-a {
+/* a {
 	color: var(--medium-green);
 
-}
+} */
 
-a:visited {
+/* a:visited {
 	color: var(--brand-green);
 }
 
@@ -68,7 +68,7 @@ a:hover {
 
 a:active {
 	color: var(--red);
-}
+} */
 
 p {
 	margin-top: 1.5em;

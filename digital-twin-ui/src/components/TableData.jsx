@@ -118,12 +118,12 @@ function TableData(props) {
         {
             title: 'Номер отказа',
             dataIndex: 'key',
-            width: '30%',
+            width: '5%',
         },
         {
             title: 'Вид отказа',
             dataIndex: 'name',
-            width: '30%',
+            width: '20%',
             editable: true,
         },
         {
@@ -142,12 +142,17 @@ function TableData(props) {
             editable: true,
         },
         {
+            title: 'Параметр 3',
+            dataIndex: 'parameter3',
+            editable: true,
+        },
+        {
             title: 'Действие',
             dataIndex: 'operation',
             render: (_, record) =>
                 props.dataSource.length >= 1 ? (
-                    <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.key)}>
-                        <a>Delete</a>
+                    <Popconfirm title="Удалить ?" onConfirm={() => handleDelete(record.key)}>
+                        <a>Удалить</a>
                     </Popconfirm>
                 ) : null,
         },

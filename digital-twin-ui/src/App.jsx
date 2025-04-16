@@ -11,18 +11,15 @@ const App = () => {
 
   const [modalStyle, setModalStyle] = useState({ display: 'none' });
   const [fileText, setFileText] = useState()
-
   const [error, setError] = useState(null);
   const [projects, setProjects] = useState(null)
   const [projectId, setProjectId] = useState("")
   const [projectData, setProjectData] = useState(null)
-
   const [projectFailureRate, setProjectFailureRate] = useState(null)
 
   const openModal = () => {
     setModalStyle({ display: 'block' });
   };
-
 
   const closeModal = () => {
     setModalStyle({ display: 'none' });
@@ -32,6 +29,16 @@ const App = () => {
     setProjectId("");
   };
 
+  useEffect(() => {
+    fetchProjects()
+  }, []);
+
+  useEffect(() => {
+    if (projectId != "") {
+      console.log(projectId);
+      fetchProjectData();
+    }
+  }, [projectId]);
 
   const fetchProjects = () => {
     fetch('http://localhost:8000/projects')
@@ -39,16 +46,13 @@ const App = () => {
       .then(
         (result) => {
           setProjects(result);
+          console.log(result);
         },
         (error) => {
           setError(error);
         }
       )
   }
-
-  useEffect(() => {
-    fetchProjects()
-  }, []);
 
   const fetchProjectData = () => {
     console.log(projectId);
@@ -66,7 +70,8 @@ const App = () => {
 
 
   const onClick = (e) => {
-    setProjectId(e.target.id)
+    setProjectId(e.target.id);
+    console.log(e);
     console.log('click ', e.target.id);
   };
 
@@ -87,14 +92,6 @@ const App = () => {
       console.log(response);
     }
   }
-
-
-  useEffect(() => {
-    if (projectId != "") {
-      console.log(projectId);
-      fetchProjectData();
-    }
-  }, [projectId]);
 
   const createProject = (e) => {
     // event.preventDefault();

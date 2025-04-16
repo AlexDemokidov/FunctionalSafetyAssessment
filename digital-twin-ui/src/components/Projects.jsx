@@ -13,7 +13,8 @@ function Projects(props) {
                             <div className="projects__field" key={project.id}>
                                 <h3 className="number">Номер проекта: {project.id}</h3>
                                 <h3 className="number">Дата создания: {project.created}</h3>
-                                <Button type="default" id={project.id} onClick={props.onClick} >Открыть </Button>
+                                {/* <Button type="default" id={project.id} onClick={props.onClick} >Открыть </Button> */}
+                                <button className='text-white' id={project.id} onClick={props.onClick} >Открыть </button>
                                 {/* <button id={project.id} className="projects__delete" onClick={props.deleteProject} >X </button> */}
                             </div>
                         ))}

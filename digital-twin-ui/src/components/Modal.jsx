@@ -6,32 +6,70 @@ const { Option } = Select;
 
 function Modal(props) {
 
-    function test() {
-        console.log(dataSource)
-    }
-
+    const [form] = Form.useForm(); // Хук формы Ant Design
+    const [analisys, setAnalisys] = useState('Weibull');
     const [dataSource, setDataSource] = useState([
         {
             key: '1',
             name: 'Недостаточная емкость',
             age: '100',
             parameter1: '78',
-            parameter2: '43'
+            parameter2: '43',
+            parameter3: '68'
         },
         {
             key: '2',
             name: 'Перегрев',
             age: '56',
             parameter1: '30',
-            parameter2: '89'
+            parameter2: '89',
+            parameter3: '25',
         },
     ]);
 
+    function createProject() {
+        const formValues = form.getFieldsValue();
+        let data = {}
+        if (analisys == 'Weibull') {
+            data = {
+                name: formValues.projectName,
+                project: dataSource,
+                analysis: analisys,
+                sil: formValues.sil
+            }
+        }
+        else {
+            data = {
+                name: formValues.projectName,
+                analysis: analisys,
+                sil: formValues.sil
+            }
+        }
+        console.log(data)
+
+        // const response = fetch(`http://localhost:8000/projects`, {
+        //     method: "POST",
+        //     headers: { "Accept": "application/json", "Content-Type": "application/json" },
+        //     body: JSON.stringify({
+        //         data
+        //     })
+        // });
+        // if (response.ok) {
+        //     window.location.reload()
+        //     console.log(response);
+        // }
+        // else
+        //     console.log(response);
+    }
+
+
+
     const fileReader = new FileReader();
 
-    const [value, setValue] = useState('Weibull');
-    const onChange = e => {
-        setValue(e.target.value);
+
+
+    const onChangeAnalisys = e => {
+        setAnalisys(e.target.value);
     };
 
     fileReader.onloadend = () => {
@@ -45,6 +83,11 @@ function Modal(props) {
         fileReader.readAsText(newProject);
     }
 
+    const handleSubmit = () => {
+        const formValues = form.getFieldsValue();
+        console.log('Выбранный SIL:', formValues.sil); // Получаем значение поля "sil"
+    };
+
     return (
         <div className="modal" id="modal" style={props.modalStyle}>
             <div className="modal-backdrop"></div>
@@ -53,14 +96,12 @@ function Modal(props) {
                     <span className="sr-only">close</span>
                 </button>
                 <h1 className="text-2xl m-5 justify-self-center">Создание нового проекта</h1>
-                <Form className="flex flex-col">
+                <Form className="flex flex-col" form={form}>
                     <Form.Item name="projectName" label="Название проекта" rules={[{ required: true }]}>
                         <Input placeholder="Введите название проекта" />
                     </Form.Item>
                     <Form.Item name="sil" label="Уровень полноты безопасности" rules={[{ required: true }]}>
-                        <Select
-                            placeholder="Выберите SIL"
-                        >
+                        <Select placeholder="Выберите SIL">
                             <Option value="1">1</Option>
                             <Option value="2">2</Option>
                             <Option value="3">3</Option>
@@ -69,8 +110,8 @@ function Modal(props) {
                     </Form.Item>
                     <Form.Item rules={[{ required: true }]}>
                         <Radio.Group
-                            onChange={onChange}
-                            value={value}
+                            onChange={onChangeAnalisys}
+                            value={analisys}
                             options={[
                                 {
                                     value: 'Weibull',
@@ -87,7 +128,7 @@ function Modal(props) {
                             ]}
                         />
                     </Form.Item>
-                    {value == 'Weibull' &&
+                    {analisys == 'Weibull' &&
                         <>
                             <Form.Item label="Данные по сроку службы и мониторингу" />
                             <TableData dataSource={dataSource} setDataSource={setDataSource}></TableData>
@@ -95,7 +136,7 @@ function Modal(props) {
                     }
                     <Form.Item>
                         {/* <Button type="primary" onClick={props.createProject}>Создать проект</Button> */}
-                        <Button type="primary" onClick={test}>Создать проект</Button>
+                        <Button type="primary" onClick={createProject}>Создать проект</Button>
                     </Form.Item>
                 </Form>
             </div>

@@ -5,12 +5,12 @@ function Header(props) {
             <header>
                 <nav className="nav-container">
                     <div className="nav-container__inner items-center">
-                        <a href="http://localhost/">
+                        <a href="http://localhost:5173/">
                             <img className="header__logo" src="/src/img/digital-twin.png" alt="Логотип Digital Twin" />
                         </a>
                         <ul className="top-nav">
                             <li className="menu__item menu__item_active">
-                                <a href="http://localhost/">ГЛАВНАЯ</a>
+                                <a href="http://localhost:5173/">ГЛАВНАЯ</a>
                             </li>
                             <li className="menu__item" id="open" onClick={props.openModal}><a>НОВЫЙ ПРОЕКТ</a></li>
                             <li className="menu__item">
