@@ -109,9 +109,8 @@ const EditableCell = _a => {
 function TableData(props) {
     const [count, setCount] = useState(3);
     const handleDelete = key => {
-        const newData = dataSource.filter(item => item.key !== key);
+        const newData = props.dataSource.filter(item => item.key !== key);
         props.setDataSource(newData);
-        props.dataSource = newData
         setCount(count - 1);
     };
     const defaultColumns = [
@@ -128,7 +127,7 @@ function TableData(props) {
         },
         {
             title: 'Срок службы',
-            dataIndex: 'age',
+            dataIndex: 'time',
             editable: true,
         },
         {
@@ -160,10 +159,11 @@ function TableData(props) {
     const handleAdd = () => {
         const newData = {
             key: count,
-            name: '-',
-            age: '-',
-            parameter1: '-',
-            parameter2: '-',
+            name: '10',
+            time: '10',
+            parameter1: '10',
+            parameter2: '10',
+            parameter3: '10'
         };
         props.setDataSource([...props.dataSource, newData]);
         setCount(count + 1);

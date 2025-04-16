@@ -3,10 +3,9 @@ import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-
 DB_URL = os.getenv('DB_URL')
 
-# DB_URL = "postgresql://postgres:postgres@localhost:5432/postgres"
+DB_URL = "postgresql://postgres:postgres@localhost:5432/postgres"
 
 assert DB_URL is not None, 'DB_URL environment variable needed.'
 

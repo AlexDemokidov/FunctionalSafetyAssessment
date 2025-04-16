@@ -7,17 +7,10 @@ from pydantic import BaseModel, Extra, conint, conlist, validator
 
 class ProjectItemSchema(BaseModel):
     name: str
-    type: str
-    value: str
-    node1: str
-    node2: str
-    node3: str
-    node4: str
-    voltage: str
-    current: str
-    power: str
-    failure_rate: str
-    mtbf: str
+    time: str
+    parameter1: str
+    parameter2: str
+    parameter3: str
 
     # class Config:
     #     extra = Extra.forbid

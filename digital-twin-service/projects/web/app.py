@@ -83,5 +83,4 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
 from projects.web.api import api

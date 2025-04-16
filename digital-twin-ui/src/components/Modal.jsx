@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button, Form, Input, Select, Radio } from 'antd';
 import TableData from "./TableData.jsx";
+import axios from 'axios';
 const { Option } = Select;
 
 
@@ -12,7 +13,7 @@ function Modal(props) {
         {
             key: '1',
             name: 'Недостаточная емкость',
-            age: '100',
+            time: '100',
             parameter1: '78',
             parameter2: '43',
             parameter3: '68'
@@ -20,47 +21,105 @@ function Modal(props) {
         {
             key: '2',
             name: 'Перегрев',
-            age: '56',
+            time: '56',
             parameter1: '30',
             parameter2: '89',
             parameter3: '25',
         },
     ]);
 
-    function createProject() {
+
+
+    const createProject = async () => {
         const formValues = form.getFieldsValue();
         let data = {}
         if (analisys == 'Weibull') {
             data = {
-                name: formValues.projectName,
-                project: dataSource,
-                analysis: analisys,
-                sil: formValues.sil
+                "project": dataSource,
+                "name": formValues.projectName,
+                "analysis": analisys,
+                "sil": formValues.sil
             }
+
         }
         else {
             data = {
-                name: formValues.projectName,
-                analysis: analisys,
-                sil: formValues.sil
+                "name": formValues.projectName,
+                "analysis": analisys,
+                "sil": formValues.sil
             }
         }
-        console.log(data)
+        try {
+            const response = await axios.post(
+                'http://localhost:8000/projects', data, {
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                }
+            }
+            );
+            console.log('Ответ сервера:', response.data);
+            window.location.reload()
+        } catch (error) {
+            console.error('Ошибка запроса:', error.response?.data || error.message);
+        }
+    };
 
-        // const response = fetch(`http://localhost:8000/projects`, {
-        //     method: "POST",
-        //     headers: { "Accept": "application/json", "Content-Type": "application/json" },
-        //     body: JSON.stringify({
-        //         data
-        //     })
-        // });
-        // if (response.ok) {
-        //     window.location.reload()
-        //     console.log(response);
-        // }
-        // else
-        //     console.log(response);
-    }
+    // function createProject() {
+    //     const formValues = form.getFieldsValue();
+    //     let data = {}
+    //     if (analisys == 'Weibull') {
+    //         let dataTest = [{
+    //             name: 'gfgfg',
+    //             time: '100',
+    //             parameter1: '78',
+    //             parameter2: '43',
+    //             parameter3: '68'
+    //         }]
+    //         data = {
+    //             project: dataTest
+    //             // name: formValues.projectName,
+    //             // analysis: analisys,
+    //             // sil: formValues.sil
+    //         }
+    //         // data = JSON.stringify(data)
+    //         // data = {
+    //         //     // name: formValues.projectName,
+    //         //     project: dataSource,
+    //         //     // analysis: analisys,
+    //         //     // sil: formValues.sil
+    //         // }
+    //     }
+    //     else {
+    //         data = {
+    //             name: formValues.projectName,
+    //             analysis: analisys,
+    //             sil: formValues.sil
+    //         }
+    //     }
+    //     console.log(data)
+
+    //     // const response = fetch(`http://localhost:8000/projects`, {
+    //     //     method: "POST",
+    //     //     headers: { "Accept": "application/json", "Content-Type": "application/json" },
+    //     //     body: JSON.stringify({
+    //     //         data
+    //     //     })
+    //     // });
+    //     const response = fetch(`http://localhost:8000/projects`, {
+    //         method: "POST",
+    //         headers: { "Accept": "application/json", "Content-Type": "application/json" },
+    //         body: JSON.stringify({
+    //             data
+    //         })
+    //     });
+    //     if (response.ok) {
+    //         window.location.reload()
+    //         console.log(response);
+    //     }
+    //     else
+    //         console.log(response);
+    // }
 
 
 

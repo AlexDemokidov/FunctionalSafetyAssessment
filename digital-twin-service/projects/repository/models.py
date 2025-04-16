@@ -35,32 +35,18 @@ class ProjectItemModel(Base):
 
     id = Column(String, primary_key=True, default=generate_uuid)
     project_id = Column(String, ForeignKey("project.id"))
-    name = Column(String, nullable=True)
-    type = Column(String, nullable=True)
-    value = Column(String, nullable=False)
-    node1 = Column(String, nullable=False)
-    node2 = Column(String, nullable=False)
-    node3 = Column(String, nullable=True)
-    node4 = Column(String, nullable=True)
-    voltage = Column(String, nullable=True)
-    current = Column(String, nullable=True)
-    power = Column(String, nullable=True)
-    failure_rate = Column(String, nullable=True)
-    mtbf = Column(String, nullable=True)
+    name = Column(String, nullable=False)
+    time = Column(String, nullable=False)
+    parameter1 = Column(String, nullable=False)
+    parameter2 = Column(String, nullable=False)
+    parameter3 = Column(String, nullable=False)
 
     def dict(self):
         return {
             "id": self.id, 
             "name": self.name, 
-            "type": self.type, 
-            "value": self.value, 
-            "node1": self.node1, 
-            "node2": self.node2, 
-            "node3": self.node3, 
-            "node4": self.node4, 
-            "voltage": self.voltage, 
-            "current": self.current, 
-            "power": self.power, 
-            "failure_rate": self.failure_rate, 
-            "mtbf": self.mtbf 
+            "time": self.time, 
+            "parameter1": self.parameter1, 
+            "parameter2": self.parameter2, 
+            "parameter3": self.parameter3, 
         }

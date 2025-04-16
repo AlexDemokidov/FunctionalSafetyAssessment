@@ -4,23 +4,16 @@ from projects.projects_service.exceptions import APIIntegrationError, InvalidAct
 
 
 class ProjectItem:
-    def __init__(self, id, name, type, value, node1, node2, node3, node4, voltage, current, power, failure_rate, mtbf):
+    def __init__(self, id, name, time, parameter1, parameter2, parameter3):
         self.id = id
         self.name = name
-        self.type = type
-        self.value = value
-        self.node1 = node1
-        self.node2 = node2
-        self.node3 = node3
-        self.node4 = node4
-        self.voltage = voltage
-        self.current = current
-        self.power = power
-        self.failure_rate = failure_rate
-        self.mtbf = mtbf
+        self.time = time
+        self.parameter1 = parameter1
+        self.parameter2 = parameter2
+        self.parameter3 = parameter3
 
     def dict(self):
-        return {"name": self.name, "type": self.type, "value": self.value, "node1": self.node1, "node2": self.node2, "node3": self.node3, "node4": self.node4, "voltage": self.voltage, "current": self.current, "power": self.power, "failure_rate": self.failure_rate, "mtbf": self.mtbf }
+        return {"name": self.name, "time": self.time, "parameter1": self.parameter1, "parameter2": self.parameter2, "parameter3": self.parameter3}
 
 class Project:
     def __init__(
