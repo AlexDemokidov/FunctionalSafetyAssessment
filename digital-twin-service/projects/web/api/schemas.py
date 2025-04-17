@@ -23,6 +23,17 @@ class ProjectItemSchema(BaseModel):
 
 class CreateProjectSchema(BaseModel):
     name: str
+    sil: str
+    analysis: str
+    parameter1DirectlyProportional: str
+    parameter1Min: str
+    parameter1Max: str
+    parameter2DirectlyProportional: str
+    parameter2Min: str
+    parameter2Max: str
+    parameter3DirectlyProportional: str
+    parameter3Min: str
+    parameter3Max: str
     project: conlist(ProjectItemSchema, min_length=1)
 
     # class Config:
@@ -32,6 +43,17 @@ class CreateProjectSchema(BaseModel):
 class GetProjectSchema(CreateProjectSchema):
     id: UUID
     name: str
+    sil: str
+    analysis: str
+    parameter1DirectlyProportional: str
+    parameter1Min: str
+    parameter1Max: str
+    parameter2DirectlyProportional: str
+    parameter2Min: str
+    parameter2Max: str
+    parameter3DirectlyProportional: str
+    parameter3Min: str
+    parameter3Max: str
     created: datetime
 
 class GetProjectsSchema(BaseModel):

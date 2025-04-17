@@ -6,9 +6,9 @@ class ProjectsRepository:
     def __init__(self, session):
         self.session = session
 
-    def add(self, items, user_id, name):
+    def add(self, items, user_id, name, sil, analysis, parameter1DirectlyProportional, parameter1Min, parameter1Max, parameter2DirectlyProportional, parameter2Min, parameter2Max, parameter3DirectlyProportional, parameter3Min, parameter3Max):
         record = ProjectModel(
-            items=[ProjectItemModel(**item) for item in items], user_id=user_id, name=name
+            items=[ProjectItemModel(**item) for item in items], user_id=user_id, name=name, sil=sil, analysis=analysis, parameter1DirectlyProportional=parameter1DirectlyProportional, parameter1Min=parameter1Min, parameter1Max=parameter1Max, parameter2DirectlyProportional=parameter2DirectlyProportional, parameter2Min=parameter2Min, parameter2Max=parameter2Max, parameter3DirectlyProportional=parameter3DirectlyProportional, parameter3Min=parameter3Min, parameter3Max=parameter3Max
         )
         self.session.add(record)
         return Project(**record.dict(), project_=record)

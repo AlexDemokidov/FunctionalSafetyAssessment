@@ -76,14 +76,17 @@ function Measure(props) {
             <div className="flex flex-row justify-between m-5">
                 <div className="container">
                     <div className="title">
-                        <h1 className="number">Проект: {project.id} </h1>
+                        <h1 className="number">Номер: {project.id} </h1>
+                    </div>
+                    <div className="title">
+                        <h1 className="number">Проект: {project.name} </h1>
                     </div>
                     <div className="title">
                         <h3 className="number">Требуемый SIL: {project.sil}</h3>
                     </div>
                     <div className="title">
                         <h3>Вид анализа: </h3>
-                        <h3 className="number">{project.analisys}</h3>
+                        <h3 className="number">{project.analysis}</h3>
                     </div>
                 </div>
                 <TableData dataSource={project.project}></TableData>

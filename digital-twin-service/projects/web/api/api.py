@@ -35,8 +35,19 @@ def create_project(request: Request, payload: CreateProjectSchema):
         repo = ProjectsRepository(unit_of_work.session)
         projects_service = ProjectsService(repo)
         name = payload.name
+        sil = payload.sil
+        analysis = payload.analysis
+        parameter1DirectlyProportional = payload.parameter1DirectlyProportional
+        parameter1Min = payload.parameter1Min
+        parameter1Max = payload.parameter1Max
+        parameter2DirectlyProportional = payload.parameter2DirectlyProportional
+        parameter2Min = payload.parameter2Min
+        parameter2Max = payload.parameter2Max
+        parameter3DirectlyProportional = payload.parameter3DirectlyProportional
+        parameter3Min = payload.parameter3Min
+        parameter3Max = payload.parameter3Max
         project = payload.dict()["project"]
-        project = projects_service.place_project(project, request.state.user_id, name)
+        project = projects_service.place_project(project, request.state.user_id, name, sil, analysis, parameter1DirectlyProportional, parameter1Min, parameter1Max, parameter2DirectlyProportional, parameter2Min, parameter2Max, parameter3DirectlyProportional, parameter3Min, parameter3Max)
         unit_of_work.commit()
         return_payload = project.dict()
     return return_payload

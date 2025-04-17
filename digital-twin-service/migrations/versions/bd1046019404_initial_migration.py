@@ -21,6 +21,17 @@ def upgrade():
     op.create_table('project',
     sa.Column('id', sa.String(), nullable=False),
     sa.Column('name', sa.String(), nullable=False),
+    sa.Column('sil', sa.String(), nullable=False),
+    sa.Column('analysis', sa.String(), nullable=False),
+    sa.Column('parameter1DirectlyProportional', sa.String(), nullable=False),
+    sa.Column('parameter1Min', sa.String(), nullable=False),
+    sa.Column('parameter1Max', sa.String(), nullable=False),
+    sa.Column('parameter2DirectlyProportional', sa.String(), nullable=False),
+    sa.Column('parameter2Min', sa.String(), nullable=False),
+    sa.Column('parameter2Max', sa.String(), nullable=False),
+    sa.Column('parameter3DirectlyProportional', sa.String(), nullable=False),
+    sa.Column('parameter3Min', sa.String(), nullable=False),
+    sa.Column('parameter3Max', sa.String(), nullable=False),
     sa.Column('created', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )

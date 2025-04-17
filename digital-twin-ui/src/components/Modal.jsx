@@ -8,7 +8,7 @@ const { Option } = Select;
 function Modal(props) {
 
     const [form] = Form.useForm(); // Хук формы Ant Design
-    const [analisys, setAnalisys] = useState('Weibull');
+    const [analysis, setAnalysis] = useState('Weibull');
     const [dataSource, setDataSource] = useState([
         {
             key: '1',
@@ -33,11 +33,11 @@ function Modal(props) {
     const createProject = async () => {
         const formValues = form.getFieldsValue();
         let data = {}
-        if (analisys == 'Weibull') {
+        if (analysis == 'Weibull') {
             data = {
                 "project": dataSource,
                 "name": formValues.projectName,
-                "analysis": analisys,
+                "analysis": analysis,
                 "sil": formValues.sil,
                 "parameter1DirectlyProportional": formValues.parameter1DirectlyProportional,
                 "parameter1Min": formValues.parameter1Min,
@@ -54,7 +54,7 @@ function Modal(props) {
         else {
             data = {
                 "name": formValues.projectName,
-                "analysis": analisys,
+                "analysis": analysis,
                 "sil": formValues.sil
             }
         }
@@ -79,8 +79,8 @@ function Modal(props) {
 
 
 
-    const onChangeAnalisys = e => {
-        setAnalisys(e.target.value);
+    const onChangeAnalysis = e => {
+        setAnalysis(e.target.value);
     };
 
     fileReader.onloadend = () => {
@@ -121,8 +121,8 @@ function Modal(props) {
                     </Form.Item>
                     <Form.Item rules={[{ required: true }]}>
                         <Radio.Group
-                            onChange={onChangeAnalisys}
-                            value={analisys}
+                            onChange={onChangeAnalysis}
+                            value={analysis}
                             options={[
                                 {
                                     value: 'Weibull',
@@ -139,7 +139,7 @@ function Modal(props) {
                             ]}
                         />
                     </Form.Item>
-                    {analisys == 'Weibull' &&
+                    {analysis == 'Weibull' &&
                         <>
                             <Form.Item label="Данные по сроку службы и мониторингу" />
                             <TableData dataSource={dataSource} setDataSource={setDataSource}></TableData>
