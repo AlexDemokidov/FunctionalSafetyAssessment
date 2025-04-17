@@ -65,64 +65,6 @@ function Modal(props) {
         }
     };
 
-    // function createProject() {
-    //     const formValues = form.getFieldsValue();
-    //     let data = {}
-    //     if (analisys == 'Weibull') {
-    //         let dataTest = [{
-    //             name: 'gfgfg',
-    //             time: '100',
-    //             parameter1: '78',
-    //             parameter2: '43',
-    //             parameter3: '68'
-    //         }]
-    //         data = {
-    //             project: dataTest
-    //             // name: formValues.projectName,
-    //             // analysis: analisys,
-    //             // sil: formValues.sil
-    //         }
-    //         // data = JSON.stringify(data)
-    //         // data = {
-    //         //     // name: formValues.projectName,
-    //         //     project: dataSource,
-    //         //     // analysis: analisys,
-    //         //     // sil: formValues.sil
-    //         // }
-    //     }
-    //     else {
-    //         data = {
-    //             name: formValues.projectName,
-    //             analysis: analisys,
-    //             sil: formValues.sil
-    //         }
-    //     }
-    //     console.log(data)
-
-    //     // const response = fetch(`http://localhost:8000/projects`, {
-    //     //     method: "POST",
-    //     //     headers: { "Accept": "application/json", "Content-Type": "application/json" },
-    //     //     body: JSON.stringify({
-    //     //         data
-    //     //     })
-    //     // });
-    //     const response = fetch(`http://localhost:8000/projects`, {
-    //         method: "POST",
-    //         headers: { "Accept": "application/json", "Content-Type": "application/json" },
-    //         body: JSON.stringify({
-    //             data
-    //         })
-    //     });
-    //     if (response.ok) {
-    //         window.location.reload()
-    //         console.log(response);
-    //     }
-    //     else
-    //         console.log(response);
-    // }
-
-
-
     const fileReader = new FileReader();
 
 

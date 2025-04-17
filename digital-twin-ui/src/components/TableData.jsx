@@ -1,3 +1,6 @@
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { Button, Form, Input, Popconfirm, Table } from 'antd';
+
 var __awaiter =
     (this && this.__awaiter) ||
     function (thisArg, _arguments, P, generator) {
@@ -42,8 +45,6 @@ var __rest =
             }
         return t;
     };
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import { Button, Form, Input, Popconfirm, Table } from 'antd';
 const EditableContext = React.createContext(null);
 const EditableRow = _a => {
     var { index } = _a,
@@ -105,6 +106,7 @@ const EditableCell = _a => {
     }
     return <td {...restProps}>{childNode}</td>;
 };
+
 
 function TableData(props) {
     const [count, setCount] = useState(3);
