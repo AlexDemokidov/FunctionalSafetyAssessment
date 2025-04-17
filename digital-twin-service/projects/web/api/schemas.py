@@ -22,7 +22,7 @@ class ProjectItemSchema(BaseModel):
 
 
 class CreateProjectSchema(BaseModel):
-    # name: str
+    name: str
     project: conlist(ProjectItemSchema, min_length=1)
 
     # class Config:
@@ -31,7 +31,7 @@ class CreateProjectSchema(BaseModel):
 
 class GetProjectSchema(CreateProjectSchema):
     id: UUID
-    # name: str
+    name: str
     created: datetime
 
 class GetProjectsSchema(BaseModel):

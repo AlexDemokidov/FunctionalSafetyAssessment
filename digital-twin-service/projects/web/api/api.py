@@ -34,8 +34,9 @@ def create_project(request: Request, payload: CreateProjectSchema):
     with UnitOfWork() as unit_of_work:
         repo = ProjectsRepository(unit_of_work.session)
         projects_service = ProjectsService(repo)
+        name = payload.name
         project = payload.dict()["project"]
-        project = projects_service.place_project(project, request.state.user_id)
+        project = projects_service.place_project(project, request.state.user_id, name)
         unit_of_work.commit()
         return_payload = project.dict()
     return return_payload

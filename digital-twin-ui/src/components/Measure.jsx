@@ -1,5 +1,5 @@
 import TableData from "./TableData";
-import { Button } from 'antd';
+import { Button, Form, Input, Select } from 'antd';
 
 function Measure(props) {
 
@@ -71,11 +71,9 @@ function Measure(props) {
     return (
         <div>
             <div>
-                <button className="close__button" onClick={props.closeProject}>
-                    <span className="sr">close</span>
-                </button>
+
             </div>
-            <section className="parameters__section">
+            <div className="flex flex-row justify-between m-5">
                 <div className="container">
                     <div className="title">
                         <h1 className="number">Проект: {project.id} </h1>
@@ -89,9 +87,13 @@ function Measure(props) {
                     </div>
                 </div>
                 <TableData dataSource={project.project}></TableData>
-            </section>
 
+            </div>
+            <button className="close__button" onClick={props.closeProject}>
+                <span className="sr">close</span>
+            </button>
             <Button onClick={measureSIL}>Расчет</Button>
+
         </div>
     )
 }

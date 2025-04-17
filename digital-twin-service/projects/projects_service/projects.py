@@ -19,14 +19,14 @@ class Project:
     def __init__(
         self,
         id,
-        # name,
+        name,
         created,
         items,
         project_=None,
     ):
         self._project = project_
         self._id = id
-        # self._name = name
+        self._name = name
         self._created = created
         self.items = [ProjectItem(**item) for item in items]
 
@@ -34,9 +34,9 @@ class Project:
     def id(self):
         return self._id or self._project.id
     
-    # @property
-    # def name(self):
-    #     return self._name or self._project.name
+    @property
+    def name(self):
+        return self._name or self._project.name
 
     @property
     def created(self):
@@ -45,7 +45,7 @@ class Project:
     def dict(self):
         return {
             "id": self.id,
-            # "name": self.name,
+            "name": self.name,
             "project": [item.dict() for item in self.items],
             "created": self.created,
         }

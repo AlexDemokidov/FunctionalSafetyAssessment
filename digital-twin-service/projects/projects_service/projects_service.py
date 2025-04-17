@@ -6,8 +6,8 @@ class ProjectsService:
     def __init__(self, projects_repository: ProjectsRepository):
         self.projects_repository = projects_repository
 
-    def place_project(self, items, user_id):
-        return self.projects_repository.add(items, user_id)
+    def place_project(self, items, user_id, name):
+        return self.projects_repository.add(items, user_id, name)
 
     def get_project(self, project_id, **filters):
         project = self.projects_repository.get(project_id, **filters)

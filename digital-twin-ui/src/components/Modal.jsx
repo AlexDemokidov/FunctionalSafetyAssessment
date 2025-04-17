@@ -38,7 +38,16 @@ function Modal(props) {
                 "project": dataSource,
                 "name": formValues.projectName,
                 "analysis": analisys,
-                "sil": formValues.sil
+                "sil": formValues.sil,
+                "parameter1DirectlyProportional": formValues.parameter1DirectlyProportional,
+                "parameter1Min": formValues.parameter1Min,
+                "parameter1Max": formValues.parameter1Max,
+                "parameter2DirectlyProportional": formValues.parameter2DirectlyProportional,
+                "parameter2Min": formValues.parameter2Min,
+                "parameter2Max": formValues.parameter2Max,
+                "parameter3DirectlyProportional": formValues.parameter2DirectlyProportional,
+                "parameter3Min": formValues.parameter3Min,
+                "parameter3Max": formValues.parameter3Max,
             }
 
         }
@@ -49,6 +58,7 @@ function Modal(props) {
                 "sil": formValues.sil
             }
         }
+        console.log(data);
         try {
             const response = await axios.post(
                 'http://localhost:8000/projects', data, {
@@ -135,6 +145,45 @@ function Modal(props) {
                             <TableData dataSource={dataSource} setDataSource={setDataSource}></TableData>
                         </>
                     }
+                    <h3>Параметр 1</h3>
+                    <Form.Item name="parameter1DirectlyProportional" rules={[{ required: true }]}>
+                        <Select placeholder="Выберите влияние">
+                            <Option value="true">Прямое</Option>
+                            <Option value="false">Обратное</Option>
+                        </Select>
+                    </Form.Item>
+                    <Form.Item name="parameter1Min" label="Минимум" rules={[{ required: true }]}>
+                        <Input placeholder="Введите минимальное значение" />
+                    </Form.Item>
+                    <Form.Item name="parameter1Max" label="Максимум" rules={[{ required: true }]}>
+                        <Input placeholder="Введите максимальное значение" />
+                    </Form.Item>
+                    <h3>Параметр 2</h3>
+                    <Form.Item name="parameter2DirectlyProportional" rules={[{ required: true }]}>
+                        <Select placeholder="Выберите влияние">
+                            <Option value="true">Прямое</Option>
+                            <Option value="false">Обратное</Option>
+                        </Select>
+                    </Form.Item>
+                    <Form.Item name="parameter2Min" label="Минимум" rules={[{ required: true }]}>
+                        <Input placeholder="Введите минимальное значение" />
+                    </Form.Item>
+                    <Form.Item name="parameter2Max" label="Минимум" rules={[{ required: true }]}>
+                        <Input placeholder="Введите максимальное значение" />
+                    </Form.Item>
+                    <h3>Параметр 3</h3>
+                    <Form.Item name="parameter3DirectlyProportional" rules={[{ required: true }]}>
+                        <Select placeholder="Выберите влияние">
+                            <Option value="true">Прямое</Option>
+                            <Option value="false">Обратное</Option>
+                        </Select>
+                    </Form.Item>
+                    <Form.Item name="parameter3Min" label="Минимум" rules={[{ required: true }]}>
+                        <Input placeholder="Введите минимальное значение" />
+                    </Form.Item>
+                    <Form.Item name="parameter3Max" label="Минимум" rules={[{ required: true }]}>
+                        <Input placeholder="Введите максимальное значение" />
+                    </Form.Item>
                     <Form.Item>
                         {/* <Button type="primary" onClick={props.createProject}>Создать проект</Button> */}
                         <Button type="primary" onClick={createProject}>Создать проект</Button>

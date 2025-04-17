@@ -17,14 +17,14 @@ class ProjectModel(Base):
 
     id = Column(String, primary_key=True, default=generate_uuid)
     user_id = Column(String, nullable=False)
-    # name = Column(String, nullable=True)
+    name = Column(String, nullable=False)
     items = relationship("ProjectItemModel", backref="project")
     created = Column(DateTime, default=datetime.utcnow)
 
     def dict(self):
         return {
             "id": self.id,
-            # "name": self.name,
+            "name": self.name,
             "items": [item.dict() for item in self.items],
             "created": self.created,
         }

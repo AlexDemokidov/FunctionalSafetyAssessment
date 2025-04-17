@@ -6,9 +6,9 @@ class ProjectsRepository:
     def __init__(self, session):
         self.session = session
 
-    def add(self, items, user_id):
+    def add(self, items, user_id, name):
         record = ProjectModel(
-            items=[ProjectItemModel(**item) for item in items], user_id=user_id
+            items=[ProjectItemModel(**item) for item in items], user_id=user_id, name=name
         )
         self.session.add(record)
         return Project(**record.dict(), project_=record)
