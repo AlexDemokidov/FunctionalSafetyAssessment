@@ -1,14 +1,77 @@
-{
-    "project": [
-        {
-            "name": "Недостаточная емкость",
-            "time": "100",
-            "parameter1": "78",
-            "parameter2": "43",
-            "parameter3": "68"
-        }
-    ]
-}
+<>
+    <Routes>
+        <Route path="/projects" element={projects ? <Projects projects={projects} onClick={onClick} deleteProject={deleteProject} /> : <Spin size="large" />} />
+        <Route path={`/projects/${projectId}`} element={projectData ? <Measure project={projectData} measure={measure} setProjectData={setProjectData} projectFailureRate={projectFailureRate} closeProject={closeProject} /> : <Spin size="large" />} />
+        <Route path="*" element={<NotFound />}></Route>
+    </Routes>
+</>
+
+
+
+
+
+
+
+
+
+
+
+
+
+// function createProject() {
+//     const formValues = form.getFieldsValue();
+//     let data = {}
+//     if (analisys == 'Weibull') {
+//         let dataTest = [{
+//             name: 'gfgfg',
+//             time: '100',
+//             parameter1: '78',
+//             parameter2: '43',
+//             parameter3: '68'
+//         }]
+//         data = {
+//             project: dataTest
+//             // name: formValues.projectName,
+//             // analysis: analisys,
+//             // sil: formValues.sil
+//         }
+//         // data = JSON.stringify(data)
+//         // data = {
+//         //     // name: formValues.projectName,
+//         //     project: dataSource,
+//         //     // analysis: analisys,
+//         //     // sil: formValues.sil
+//         // }
+//     }
+//     else {
+//         data = {
+//             name: formValues.projectName,
+//             analysis: analisys,
+//             sil: formValues.sil
+//         }
+//     }
+//     console.log(data)
+//     // const response = fetch(`http://localhost:8000/projects`, {
+//     //     method: "POST",
+//     //     headers: { "Accept": "application/json", "Content-Type": "application/json" },
+//     //     body: JSON.stringify({
+//     //         data
+//     //     })
+//     // });
+//     const response = fetch(`http://localhost:8000/projects`, {
+//         method: "POST",
+//         headers: { "Accept": "application/json", "Content-Type": "application/json" },
+//         body: JSON.stringify({
+//             data
+//         })
+//     });
+//     if (response.ok) {
+//         window.location.reload()
+//         console.log(response);
+//     }
+//     else
+//         console.log(response);
+// }
 
 
 {

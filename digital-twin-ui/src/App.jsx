@@ -1,11 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
-// import axios from 'axios';
-import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
+import { Routes, Route, Link } from 'react-router'
+import { AppstoreOutlined, MailOutlined, RotateLeftOutlined, SettingOutlined } from '@ant-design/icons';
 import { Spin } from 'antd';
 import Header from "./components/Header.jsx";
 import Projects from "./components/Projects.jsx";
 import Measure from "./components/Measure.jsx";
+import NotFound from "./components/NotFound.jsx"
 import Modal from "./components/Modal.jsx";
+
 
 const App = () => {
 
@@ -72,6 +74,7 @@ const App = () => {
   const onClick = (e) => {
     setProjectId(e.target.id);
     console.log(e);
+    console.log("hello");
     console.log('click ', e.target.id);
   };
 
@@ -229,19 +232,28 @@ const App = () => {
 
   };
 
-  return projectId === "" ? (
-    <div className='projects'>
-      <Header openModal={openModal} />
-      <Modal modalStyle={modalStyle} setFileText={setFileText} fileText={fileText} createProject={createProject} closeModal={closeModal} />
-      {projects ? <Projects projects={projects} onClick={onClick} deleteProject={deleteProject} /> : <Spin size="large" />}
-    </div>
-  ) : (
-    <div>
-      <Header openModal={openModal} />
-      <Modal modalStyle={modalStyle} setFileText={setFileText} fileText={fileText} createProject={createProject} closeModal={closeModal} />
-      {projectData ? <Measure project={projectData} measure={measure} setProjectData={setProjectData} projectFailureRate={projectFailureRate} closeProject={closeProject} /> : <Spin size="large" />}
-    </div >
-  );
+  // return projectId === "" ? (
+  //   <div className='projects'>
+  //     <Header openModal={openModal} />
+  //     <Modal modalStyle={modalStyle} setFileText={setFileText} fileText={fileText} createProject={createProject} closeModal={closeModal} />
+  //     {projects ? <Projects projects={projects} onClick={onClick} deleteProject={deleteProject} /> : <Spin size="large" />}
+  //   </div>
+  // ) : (
+  //   <div>
+  //     <Header openModal={openModal} />
+  //     <Modal modalStyle={modalStyle} setFileText={setFileText} fileText={fileText} createProject={createProject} closeModal={closeModal} />
+  //     {projectData ? <Measure project={projectData} measure={measure} setProjectData={setProjectData} projectFailureRate={projectFailureRate} closeProject={closeProject} /> : <Spin size="large" />}
+  //   </div >
+  // );
 
+  return (
+    <>
+      <Routes>
+        <Route path="/projects" element={projects ? <Projects projects={projects} onClick={onClick} deleteProject={deleteProject} /> : <Spin size="large" />} />
+        <Route path={`/project/${projectId}`} element={projectData ? <Measure project={projectData} measure={measure} setProjectData={setProjectData} projectFailureRate={projectFailureRate} closeProject={closeProject} /> : <Spin size="large" />} />
+        <Route path="*" element={<NotFound />}></Route>
+      </Routes>
+    </>
+  );
 };
 export default App;

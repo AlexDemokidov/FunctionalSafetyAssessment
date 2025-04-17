@@ -69,7 +69,8 @@ function Measure(props) {
     }
 
     return (
-        <div>
+        <>
+            <Header />
             <div>
                 <button className="close__button" onClick={props.closeProject}>
                     <span className="sr">close</span>
@@ -92,7 +93,7 @@ function Measure(props) {
             </section>
 
             <Button onClick={measureSIL}>Расчет</Button>
-        </div>
+        </>
     )
 }
 
