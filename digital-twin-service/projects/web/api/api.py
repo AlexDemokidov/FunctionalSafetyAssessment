@@ -11,7 +11,7 @@ from projects.projects_service.projects_service import ProjectsService
 from projects.repository.projects_repository import ProjectsRepository
 from projects.repository.unit_of_work import UnitOfWork
 from projects.web.app import app
-from projects.web.api.schemas import GetProjectSchema, CreateProjectSchema, GetProjectsSchema
+from projects.web.api.schemas import GetModelSchema, GetProjectSchema, CreateProjectSchema, GetProjectsSchema
 
 from projects.projects_service.measure import measure
 
@@ -102,21 +102,37 @@ def delete_project(request: Request, project_id: UUID):
             status_code=404, detail=f"Project with ID {project_id} not found"
         )
 
-@app.put("/projects/{project_id}/measure", response_model=GetProjectSchema)
-def measure_project(request: Request, project_id: UUID, project_details: CreateProjectSchema):
+@app.get("/projects/{project_id}/measure", response_model=GetModelSchema)
+def measure_project(request: Request, project_id: UUID):
     try:
         with UnitOfWork() as unit_of_work:
             repo = ProjectsRepository(unit_of_work.session)
             projects_service = ProjectsService(repo)
-            project = project_details.dict()["project"] 
-            project = measure(project)
-            project = projects_service.update_project(
-                project_id=project_id, items=project, user_id=request.state.user_id
-            )
-
-            unit_of_work.commit()
-        return project.dict()
+            project = projects_service.get_project(
+                project_id=project_id, user_id=request.state.user_id
+            ).dict()
+            model = measure(project)
+        return model
     except ProjectNotFoundError:
         raise HTTPException(
             status_code=404, detail=f"Project with ID {project_id} not found"
         )
+
+# @app.put("/projects/{project_id}/measure", response_model=GetModelSchema)
+# def measure_project(request: Request, project_id: UUID, project_details: CreateProjectSchema):
+#     try:
+#         with UnitOfWork() as unit_of_work:
+#             repo = ProjectsRepository(unit_of_work.session)
+#             projects_service = ProjectsService(repo)
+#             project = project_details.dict()
+#             model = measure(project)
+#             # project = projects_service.update_project(
+#             #     project_id=project_id, items=project, user_id=request.state.user_id
+#             # )
+
+#             # unit_of_work.commit()
+#         return model
+#     except ProjectNotFoundError:
+#         raise HTTPException(
+#             status_code=404, detail=f"Project with ID {project_id} not found"
+#         )

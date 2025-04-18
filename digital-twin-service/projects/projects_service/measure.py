@@ -1,201 +1,132 @@
-from PySpice.Doc.ExampleTools import find_libraries
-from PySpice.Spice.Library import SpiceLibrary
-from PySpice.Spice.Netlist import Circuit
-from PySpice.Unit import *
 from math import exp
+import numpy as np
+from scipy.optimize import minimize
 
 def measure(project):
 
-    #######################################
-    ### Расчет электрических параметров ###
-    #######################################
+    # model = project
+    # Подготовка данных
+    data = []
+    for point in project["project"]:
+        data.append({
+            "mode": point["name"],
+            "t": float(point["time"]),
+            "p1": float(point["parameter1"]),
+            "p2": float(point["parameter2"]),
+            "p3": float(point["parameter3"])
+        })
 
-    circuit = Circuit('Project1')
+    # Функция нормализации с исправленным синтаксисом
+    def normalize(p1, p2, p3):
+        # Получаем границы и диапазоны для каждого параметра
+        p1_min, p1_max = float(project["parameter1Min"]), float(project["parameter1Max"])
+        p2_min, p2_max = float(project["parameter2Min"]), float(project["parameter2Max"])
+        p3_min, p3_max = float(project["parameter3Min"]), float(project["parameter3Max"])
 
-    for component in project:
-        if component.get('name')[0] == "R":
-            circuit.R(component.get('name')[1:], component.get('node1'), component.get('node2'), component.get('value'))
-            getattr(circuit, component.get('name')).plus.add_current_probe(circuit)
-            # print(type + number, firstNode, secondNode, value)
-        if component.get('name')[0] == "V":
-            circuit.V(component.get('name')[1:], component.get('node1'), component.get('node2'), component.get('value'))
-            # print(type + number, firstNode, secondNode, value)
-        if component.get('name')[0] == "I":
-            circuit.I(component.get('name')[1:], component.get('node1'), component.get('node2'), component.get('value'))
-            # print(type + number, firstNode, secondNode, value)
-        if component.get('name')[0] == "C":
-            circuit.C(component.get('name')[1:], component.get('node1'), component.get('node2'), component.get('value'))
-            # print(type + number, firstNode, secondNode, value)
-        if component.get('type') == "D":
-            circuit.X(component.get('name'), component.get('node1'), component.get('node2'), component.get('value'))
-            # print(type + number, firstNode, secondNode, model)
-        if component.get('type') == "Q":
-            circuit.X(component.get('name'), component.get('node1'), component.get('node2'), component.get('node3'), component.get('value'))
-            # print(type + number, firstNode, secondNode, thirdNode, model)
+        p1_range = p1_max - p1_min
+        p2_range = p2_max - p2_min
+        p3_range = p3_max - p3_min
 
-    simulator = circuit.simulator(temperature=22, nominal_temperature=22)
-    analysis = simulator.operating_point()
+        # Нормализация параметра 1 (давление)
+        clipped_p1 = np.clip(p1, p1_min, p1_max)
+        if project["parameter1DirectlyProportional"].lower() == "false":
+            z1 = 1 - (clipped_p1 - p1_min) / p1_range
+        else:
+            z1 = (clipped_p1 - p1_min) / p1_range
 
-    #########################
-    ### Расчет тока ###
-    #########################
+        # Нормализация параметра 2 (вибрация)
+        clipped_p2 = np.clip(p2, p2_min, p2_max)
+        if project["parameter2DirectlyProportional"].lower() == "false":
+            z2 = 1 - (clipped_p2 - p2_min) / p2_range
+        else:
+            z2 = (clipped_p2 - p2_min) / p2_range
 
-    for component in project:
-        if component.get('name')[0] == "R":
-            component_node = str(component.get('name')).lower()
-            for node in analysis.branches.values():
-                node_current = str(node)
-                if (component_node in node_current):
-                    component['current'] = round(float(node), 4)
-                    print("I:", component.get('name'), component.get('current'), "A")
+        # Нормализация параметра 3 (температура)
+        clipped_p3 = np.clip(p3, p3_min, p3_max)
+        if project["parameter3DirectlyProportional"].lower() == "false":
+            z3 = 1 - (clipped_p3 - p3_min) / p3_range
+        else:
+            z3 = (clipped_p3 - p3_min) / p3_range
 
-    #########################
-    ### Расчет напряжения ###
-    #########################
+        return np.array([z1, z2, z3])
 
-    for component in project:
-        if component.get('name')[0] == "R":
-            component['voltage'] = float(component.get('current')) * float(component.get('value'))
-            print("V:", component.get('name'), component.get('voltage'), "B")
+    # Безопасное вычисление логарифма
+    def safe_log(x):
+        return np.log(max(x, 1e-100))
 
-    def calcultate_k_t(E_a, T):
-        k_t = exp(((-E_a)/8.617*pow(10, -5))*((1/(T+273))-1/298))
-        return k_t
+    # Функция правдоподобия
+    def negative_log_likelihood(params):
+        beta1, eta1, beta2, eta2, gamma1, gamma2, gamma3, logit_lambda = params
+        gamma = np.array([gamma1, gamma2, gamma3])
+        lambda1 = 1 / (1 + np.exp(-logit_lambda))
+        lambda2 = 1 - lambda1
 
-    ####################################
-    ### Расчет параметров надежности ###
-    ####################################
+        total = 0.0
+        for point in data:
+            t = point['t']
+            z = normalize(point['p1'], point['p2'], point['p3'])
 
-    for component in project:
-        #Микросхемы
-        # if (component.get('type') == "Микросхемы цифровые"):
-        #     lambda_crystal = 0.02
-        #     lambda_body = 3 * pow(10, -5) * pow(4, 1.08)
-        #     k_t = 232323 # заменить на формулу
-        #     k_pr = 1
-        #     k_e = 12
-        #     component.set('failure_rate') = (lambda_crystal * k_t + lambda_body * k_e) * k_pr
-        # if (component.get('type') == "Микросхемы аналоговые"):
-        #     lambda_crystal = 0.02
-        #     component.set('failure_rate') = 
-        # if (component.get('type') == "Микросхемы памяти"):
-        #     lambda_crystal = 0.02
-        #     component.set('failure_rate') = 
-        # if (component.get('type') == "Программируемые логические интегральные схемы"):
-        #     lambda_crystal = 0.021
-        #     component.set('failure_rate') = 
-        # if (component.get('type') == "Микропроцессоры"):
-        #     lambda_crystal = 0.2
-        #     component.set('failure_rate') = 
-        # if (component.get('type') == "Микросхемы GaAs СВЧ"):
-        #     lambda_crystal = 4.5
-        #     component.set('failure_rate') = 
-        # if (component.get('type') == "Микросхемы ПАВ"):
-        #     component.set('failure_rate') = 
+            if point['mode'] == 'Mode 1':
+                beta, eta, lam = beta1, eta1, lambda1
+            else:
+                beta, eta, lam = beta2, eta2, lambda2
 
-        #Полупроводниковые приборы
+            # Вычисление функции риска и выживаемости
+            log_h = (np.log(beta) - np.log(eta) + 
+                    (beta - 1) * (np.log(t) - np.log(eta)) + 
+                    np.dot(gamma, z))
 
-        #Резисторы
-        if (component.get('type') == "Резисторы постоянные пленочные, в т.ч поверхностного монтажа"):
-            lambda_g = 0.0037
-            k_t = calcultate_k_t(0.08, 22)
-            k_r = pow((component.get('voltage') * (component.get('current'))), 0.39)
-            s = (float(component.get('voltage')) * float(component.get('current'))) / float(component.get('power'))
-            k_s = 0.71 * exp(1.1*s)
-            k_pr = 1
-            k_e = 87
-            component['failure_rate'] = lambda_g * k_t * k_r * k_s * k_pr * k_e / pow(10, 6)
-        if (component.get('type') == "Резисторы постоянные проволочные, кроме мощных"):
-            lambda_g = 0.0024
-            k_t = calcultate_k_t(0.08, 22)
-            k_r = pow((component.get('voltage') * component.get('current')), 0.39)
-            s = (float(component.get('voltage')) * float(component.get('current'))) / float(component.get('power'))
-            k_s = 0.71 * exp(1.1*s)
-            k_pr = 1
-            k_e = 87
-            component['failure_rate'] = lambda_g * k_t * k_r * k_s * k_pr * k_e / pow(10, 6)
-        if (component.get('type') == "Резисторы постоянные проволочные мощные"):
-            lambda_g = 0.0024
-            k_t = calcultate_k_t(0.08, 22)
-            k_r = pow((component.get('voltage') * component.get('current')), 0.39)
-            s = (float(component.get('voltage')) * float(component.get('current'))) / float(component.get('power'))
-            k_s = 0.54 * exp(2.04*s)
-            k_pr = 1
-            k_e = 87
-            component['failure_rate'] = lambda_g * k_t * k_r * k_s * k_pr * k_e / pow(10, 6)
-        if (component.get('type') == "Сборки резисторные, в т.ч. поверхностного монтажа"):
-            lambda_g = 0.0019
-            k_t = calcultate_k_t(0.2, 22)
-            k_r = pow((component.get('voltage') * component.get('current')), 0.39)
-            s = (float(component.get('voltage')) * float(component.get('current'))) / float(component.get('power'))
-            k_s = 1
-            k_pr = 1
-            k_e = 87
-            component['failure_rate'] = lambda_g * k_t * k_r * k_s * k_pr * k_e / pow(10, 6)
-        if (component.get('type') == "Резисторы переменные проволочные, кроме мощных и полупрецизионных"):
-            lambda_g = 0.0024
-            k_t = calcultate_k_t(0.08, 22)
-            k_r = pow((component.get('voltage') * component.get('current')), 0.39)
-            s = (float(component.get('voltage')) * float(component.get('current'))) / float(component.get('power'))
-            k_s = 0.71 * exp(1.1*s)
-            k_pr = 1
-            k_e = 87
-            component['failure_rate'] = lambda_g * k_t * k_r * k_s * k_pr * k_e / pow(10, 6)
-        if (component.get('type') == "Резисторы переменные проволочные мощные"):
-            lambda_g = 0.0024
-            k_t = calcultate_k_t(0.08, 22)
-            k_r = pow((component.get('voltage') * component.get('current')), 0.39)
-            s = (float(component.get('voltage')) * float(component.get('current'))) / float(component.get('power'))
-            k_s = 0.71 * exp(1.1*s)
-            k_pr = 1
-            k_e = 87
-            component['failure_rate'] = lambda_g * k_t * k_r * k_s * k_pr * k_e / pow(10, 6)
-        if (component.get('type') == "Резисторы переменные прововолочные полупрецизионные"):
-            lambda_g = 0.0024
-            k_t = calcultate_k_t(0.2, 22)
-            k_r = pow((component.get('voltage') * component.get('current')), 0.39)
-            s = (float(component.get('voltage')) * float(component.get('current'))) / float(component.get('power'))
-            k_s = 0.71 * exp(1.1*s)
-            k_pr = 1
-            k_e = 87
-            component['failure_rate'] = lambda_g * k_t * k_r * k_s * k_pr * k_e / pow(10, 6)
-        if (component.get('type') == "Резисторы переменные непроволочные, кроме прецизионных"):
-            lambda_g = 0.0037
-            k_t = calcultate_k_t(0.08, 22)
-            k_r = pow((component.get('voltage') * component.get('current')), 0.39)
-            s = (float(component.get('voltage')) * float(component.get('current'))) / float(component.get('power'))
-            k_s = 0.71 * exp(1.1*s)
-            k_pr = 1
-            k_e = 87
-            component['failure_rate'] = lambda_g * k_t * k_r * k_s * k_pr * k_e / pow(10, 6)
-        if (component.get('type') == "Резисторы переменные непроволочные прецизионные"):
-            lambda_g = 0.0037
-            k_t = calcultate_k_t(0.2, 22)
-            k_r = pow((component.get('voltage') * component.get('current')), 0.39)
-            s = (float(component.get('voltage')) * float(component.get('current'))) / float(component.get('power'))
-            k_s = 0.71 * exp(1.1*s)
-            k_pr = 1
-            k_e = 87
-            component['failure_rate'] = lambda_g * k_t * k_r * k_s * k_pr * k_e / pow(10, 6)
-        if (component.get('type') == "Терморезисторы"):
-            lambda_g = 0.0019
-            k_t = 1
-            k_r = pow((component.get('voltage') * component.get('current')), 0.39)
-            k_s = 1
-            k_pr = 1
-            k_e = 87
-            component['failure_rate'] = lambda_g * k_t * k_r * k_s * k_pr * k_e / pow(10, 6)
+            log_S = -((t / eta) ** beta) * np.exp(np.dot(gamma, z))
 
-        if (component.get('type') == "-"):
-            component['failure_rate'] = "-"
+            total += log_h + log_S + safe_log(lam)
 
+        return -total
 
-        # component['mtbf'] = round(1 / float(component.get('failure_rate')))
+    # Начальные параметры и ограничения
+    init_params = np.array([1.13, 622.31, 2.61, 887.40, 
+                           1.44, 2.80, -3.26, np.log(0.64/0.36)])
 
-    for component in project:
-        component['current'] = str(component['current'])
-        component['voltage'] = str(component['voltage'])
-        component['failure_rate'] = str(component['failure_rate'])
+    bounds = [
+        (0.5, 2.0), (300, 1000),    # beta1, eta1
+        (1.5, 4.0), (500, 1500),    # beta2, eta2
+        (0.5, 3.0), (1.5, 4.0), (-5.0, -1.0),  # gamma1, gamma2, gamma3
+        (None, None)                # logit_lambda
+    ]
 
+    # Оптимизация
+    result = minimize(
+        negative_log_likelihood,
+        init_params,
+        method='trust-constr',
+        bounds=bounds,
+        options={'xtol': 1e-6, 'gtol': 1e-6, 'maxiter': 1000, 'verbose': 1}
+    )
 
-    return project
+    beta1, eta1, beta2, eta2, gamma1, gamma2, gamma3, logit_lambda = result.x
+    lambda1 = 1 / (1 + np.exp(-logit_lambda))
+    lambda2 = 1 - lambda1
+
+    print("\nРезультаты оптимизации:")
+    print("-----------------------")
+    print(f"Mode 1: β = {beta1:.2f}, η = {eta1:.2f}")
+    print(f"Mode 2: β = {beta2:.2f}, η = {eta2:.2f}")
+    print(f"\nКоэффициенты влияния:")
+    print(f"γ1 (Давление) = {gamma1:.2f}")
+    print(f"γ2 (Вибрация) = {gamma2:.2f}")
+    print(f"γ3 (Температура) = {gamma3:.2f}")
+    print(f"\nДоли смешивания:")
+    print(f"λ1 = {lambda1:.4f}")
+    print(f"λ2 = {lambda2:.4f}")
+    print(f"\nЗначение функции правдоподобия: {-result.fun:.2f}")
+    print(f"Количество итераций: {result.nit}")
+
+    model = { "beta1": f"{beta1:.2f}", 
+            "eta1": f"{eta1:.2f}", 
+            "beta2": f"{beta2:.2f}", 
+            "eta2": f"{eta2:.2f}", 
+            "lambda1": f"{lambda1:.2f}", 
+            "gamma1": f"{gamma1:.2f}", 
+            "gamma2": f"{gamma2:.2f}", 
+            "gamma3": f"{gamma2:.2f}" }
+
+    return model

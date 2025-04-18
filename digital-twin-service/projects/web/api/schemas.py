@@ -61,3 +61,16 @@ class GetProjectsSchema(BaseModel):
 
     class Config:
         extra = Extra.forbid
+
+class GetModelSchema(BaseModel):
+    beta1: str
+    eta1: str
+    beta2: str
+    eta2: str
+    lambda1: str
+    gamma1: str
+    gamma2: str
+    gamma3: str
+
+    # class Config:
+    #     extra = Extra.forbid
