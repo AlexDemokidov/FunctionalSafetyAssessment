@@ -1,78 +1,73 @@
 import TableData from "./TableData";
-import { Button, Form, Input, Select } from 'antd';
+import { Button } from 'antd';
+import { Divider, Table } from 'antd';
+import { useState } from "react";
+
+const columns = [
+    {
+        title: 'β1',
+        dataIndex: 'beta1',
+    },
+    {
+        title: 'η1',
+        dataIndex: 'eta1',
+    },
+    {
+        title: 'β2',
+        dataIndex: 'beta2',
+    },
+    {
+        title: 'η2',
+        dataIndex: 'eta2',
+    },
+    {
+        title: 'λ',
+        dataIndex: 'lambda1',
+    },
+    {
+        title: 'γ1',
+        dataIndex: 'gamma1',
+    },
+    {
+        title: 'γ2',
+        dataIndex: 'gamma2',
+    },
+    {
+        title: 'γ3',
+        dataIndex: 'gamma3',
+    }
+];
+const data = [
+    {
+        key: '1',
+        name: 'John Brown',
+        age: 32,
+        address: 'New York No. 1 Lake Park',
+    }
+];
 
 function Measure(props) {
 
     let { project } = props;
 
-    let failure_rate = 0;
-    let mtbf = 0;
+    const [estimationData, setEstimationData] = useState(null);
 
-    let filteredComponents = [];
-
-    console.log(project)
-
-    // Object.assign(filteredComponents, project.project);
-    // console.log("filteredComponents", filteredComponents);
-
-    // for (var i = 0; i < filteredComponents.length; i++) {
-    //     console.log(filteredComponents[i])
-    //     if (filteredComponents[i].name == "V1" || filteredComponents[i].name == "I1" || filteredComponents[i].name == "V2") {
-    //         console.log("Нашел")
-    //         filteredComponents.splice(i, 1);
-
-    //     }
-    // }
-
-    // for (var i = 0; i < filteredComponents.length; i++) {
-    //     console.log(filteredComponents[i])
-    //     if (parseFloat(filteredComponents[i].failure_rate) != "") {
-    //         failure_rate += parseFloat(filteredComponents[i].failure_rate)
-    //     }
-    // }
-
-
-    // if (failure_rate != 0 && failure_rate != "")
-    //     mtbf = 1 / failure_rate;
-
-
-    // console.log("filteredComponents", filteredComponents);
-    // console.log("project", project)
-
-    // const handleOnChangeSelectGroup = event => {
-    //     event.preventDefault();
-    //     for (var i = 0; i < project.project.length; i++) {
-    //         if (project.project[i].name == event.target.className)
-    //             project.project[i].type = event.target.value;
-    //     }
-    //     console.log(project);
-    // }
-
-    // const handleOnChangeSelectPower = event => {
-    //     event.preventDefault();
-    //     for (var i = 0; i < project.project.length; i++) {
-    //         if (project.project[i].name == event.target.className)
-    //             project.project[i].power = event.target.value;
-    //     }
-    //     console.log(project);
-    // }
-
-    // const updateParameters = event => {
-    //     event.preventDefault();
-    //     props.setProjectData(project);
-    //     props.measure();
-    //     window.location.reload();
-    // }
-
-    function measureSIL() {
-
+    const measureSIL = () => {
+        fetch(`http://localhost:8000/projects/${project.id}/measure`)
+            .then(response => response.json())
+            .then(
+                (result) => {
+                    setEstimationData([result]);
+                },
+                (error) => {
+                    setError(error);
+                }
+            )
+        console.log(estimationData)
     }
 
     return (
-        <div>
-            <div>
-
-            </div>
+        <>
             <div className="flex flex-row justify-between m-5">
                 <div className="container">
                     <div className="title">
@@ -96,8 +91,12 @@ function Measure(props) {
                 <span className="sr">close</span>
             </button>
             <Button onClick={measureSIL}>Расчет</Button>
-
-        </div>
+            {estimationData != null && <>
+                <Divider>Параметры модели PDF</Divider>
+                <Table columns={columns} dataSource={estimationData} size="small" />
+            </>
+            }
+        </>
     )
 }
 

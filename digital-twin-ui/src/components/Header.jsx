@@ -6,7 +6,7 @@ function Header(props) {
                 <nav className="nav-container">
                     <div className="nav-container__inner items-center">
                         <a href="http://localhost:5173/">
-                            <img className="header__logo" src="/src/img/digital-twin.png" alt="Логотип Digital Twin" />
+                            <img className="header__logo" src="/src/img/shield.png" alt="Логотип FSA" />
                         </a>
                         <ul className="top-nav">
                             <li className="menu__item menu__item_active">
