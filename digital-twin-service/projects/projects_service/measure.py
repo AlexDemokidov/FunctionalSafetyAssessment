@@ -1,6 +1,7 @@
 from math import exp
 import numpy as np
 from scipy.optimize import minimize
+from scipy.integrate import quad
 
 def measure(project):
 
@@ -102,10 +103,35 @@ def measure(project):
         options={'xtol': 1e-6, 'gtol': 1e-6, 'maxiter': 1000, 'verbose': 1}
     )
 
+    def weibull_pdf(t, beta, eta):
+        return (beta / eta) * (t / eta)**(beta - 1) * np.exp(-(t / eta)**beta)
+
+    def mixed_pdf(t, beta1, eta1, beta2, eta2, lambda1):
+        pdf1 = weibull_pdf(t, beta1, eta1)
+        pdf2 = weibull_pdf(t, beta2, eta2)
+        return lambda1 * pdf1 + (1 - lambda1) * pdf2
+
+    def calculate_mttf(beta1, eta1, beta2, eta2, lambda1):
+        # MTBF это интеграл смешанной функции плотности вероятности от 0 до бесконечности
+        result, _ = quad(lambda t: t * mixed_pdf(t, beta1, eta1, beta2, eta2, lambda1), 0, np.inf)
+        return result
+    
+    def calculate_sil(pfh):
+        """Определение SIL по значению PFH"""
+        if pfh < 1e-8:
+            return 4
+        elif 1e-8 <= pfh < 1e-7:
+            return 3
+        elif 1e-7 <= pfh < 1e-6:
+            return 2
+        elif 1e-6 <= pfh < 1e-5:
+            return 1
+        else:
+            return 0  # Не соответствует SIL
+
     beta1, eta1, beta2, eta2, gamma1, gamma2, gamma3, logit_lambda = result.x
     lambda1 = 1 / (1 + np.exp(-logit_lambda))
     lambda2 = 1 - lambda1
-
     print("\nРезультаты оптимизации:")
     print("-----------------------")
     print(f"Mode 1: β = {beta1:.2f}, η = {eta1:.2f}")
@@ -120,6 +146,16 @@ def measure(project):
     print(f"\nЗначение функции правдоподобия: {-result.fun:.2f}")
     print(f"Количество итераций: {result.nit}")
 
+    #Вычисление MTTF
+    mttf = calculate_mttf(beta1, eta1, beta2, eta2, lambda1)
+    print("\nСреднее время до отказа (MTTF):")
+    print("-----------------------------")
+    print(f"MTTF: {mttf:.2f} часов")
+    pfh = 1/mttf
+    print(f"PFH: {pfh:.2e} 1/ч")
+    #Вычисление SIL
+    sil = calculate_sil(pfh)
+
     model = { "beta1": f"{beta1:.2f}", 
             "eta1": f"{eta1:.2f}", 
             "beta2": f"{beta2:.2f}", 
@@ -127,6 +163,9 @@ def measure(project):
             "lambda1": f"{lambda1:.2f}", 
             "gamma1": f"{gamma1:.2f}", 
             "gamma2": f"{gamma2:.2f}", 
-            "gamma3": f"{gamma2:.2f}" }
+            "gamma3": f"{gamma2:.2f}",
+            "mttf": f"{mttf:.2f}",
+            "pfh": f"{pfh:.2e}",
+            "sil": f"{sil:.0f}" }
 
     return model

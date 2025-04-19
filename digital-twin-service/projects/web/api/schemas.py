@@ -71,6 +71,9 @@ class GetModelSchema(BaseModel):
     gamma1: str
     gamma2: str
     gamma3: str
+    mttf: str
+    pfh: str
+    sil: str
 
     # class Config:
     #     extra = Extra.forbid

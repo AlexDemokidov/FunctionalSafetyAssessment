@@ -1,6 +1,6 @@
-import TableData from "./TableData";
-import { Button } from 'antd';
-import { Divider, Table } from 'antd';
+import TableData from "./TableData.jsx";
+import WeibullChart from "./WeibullChart.jsx";
+import { Divider, Table, Button } from 'antd';
 import { useState } from "react";
 
 const columns = [
@@ -37,14 +37,6 @@ const columns = [
         dataIndex: 'gamma3',
     }
 ];
-const data = [
-    {
-        key: '1',
-        name: 'John Brown',
-        age: 32,
-        address: 'New York No. 1 Lake Park',
-    }
-];
 
 function Measure(props) {
 
@@ -63,7 +55,6 @@ function Measure(props) {
                     setError(error);
                 }
             )
-        console.log(estimationData)
     }
 
     return (
@@ -85,7 +76,6 @@ function Measure(props) {
                     </div>
                 </div>
                 <TableData dataSource={project.project}></TableData>
-
             </div>
             <button className="close__button" onClick={props.closeProject}>
                 <span className="sr">close</span>
@@ -94,6 +84,20 @@ function Measure(props) {
             {estimationData != null && <>
                 <Divider>Параметры модели PDF</Divider>
                 <Table columns={columns} dataSource={estimationData} size="small" />
+                <Divider>Результаты анализа</Divider>
+                <div className="title">
+                    <h3 className="number">Средняя наработка до отказа (MTTF): {estimationData[0].mttf} ч</h3>
+                </div>
+                <div className="title">
+                    <h3 className="number">Средняя частота опасных отказов (PFH): {estimationData[0].pfh} 1/ч</h3>
+                </div>
+                <div className="title">
+                    <h3 className="number">Уровень полноты безопасности (SIL): {estimationData[0].sil}</h3>
+                </div>
+
+                {estimationData[0].sil != project.sil ? <h3 className="text-red-500">Не соответствует требованиям функциональной безопасности</h3> : <h3 className="text-green-500">Cоответствует требованиям</h3>}
+
+                <WeibullChart inputData={estimationData}></WeibullChart>
             </>
             }
         </>
