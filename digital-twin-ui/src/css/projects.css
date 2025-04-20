@@ -8,7 +8,7 @@
     height: 100vh;
 }
 
-.projects__section {
+/* .projects__section {
 
     display: flex;
     flex-direction: row;
@@ -19,7 +19,7 @@
     background-size: cover;
     background-size: 100% 100%;
     margin-bottom: 0;
-}
+} */
 
 .projects__title {
     margin-bottom: 0;
