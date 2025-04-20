@@ -124,7 +124,7 @@ const App = () => {
 
   return (
     <>
-      {projects ? <Main projects={projects} setProjectId={setProjectId} measure={measure} setProjectData={setProjectData} /> : <Spin size="large" />}
+      {projects ? <Main projects={projects} project={projectData} setProjectId={setProjectId} measure={measure} setProjectData={setProjectData} /> : <Spin size="large" />}
     </>
   );
 

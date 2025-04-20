@@ -10,6 +10,7 @@ import { Breadcrumb, Layout, Menu, theme } from 'antd';
 import ProjectCreation from './ProjectCreation';
 import About from './About';
 import Measure from './Measure';
+import { Spin } from 'antd';
 
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -24,7 +25,7 @@ function getItem(label, key, icon, children) {
 
 function Main(props) {
 
-    let { projects } = props;
+    let { projects, project } = props;
 
     const [selectedMenuItem, setSelectedMenuItem] = useState(1);
 
@@ -45,6 +46,7 @@ function Main(props) {
     };
 
     console.log(projects)
+    console.log(project)
 
     const items = [
         getItem('Главная', '1', <HomeOutlined />),
@@ -118,8 +120,9 @@ function Main(props) {
                                     borderRadius: borderRadiusLG,
                                 }}
                             >
-                                <Measure project={projectData} />
+                                {project ? <Measure project={project} /> : <Spin size="large" />}
                             </div>
+
                         </>
                     }
                 </Content>
