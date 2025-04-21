@@ -5,7 +5,7 @@ import axios from 'axios';
 const { Option } = Select;
 
 
-function Modal(props) {
+function ProjectCreation() {
 
     const [form] = Form.useForm(); // Хук формы Ant Design
     const [analysis, setAnalysis] = useState('Weibull');
@@ -78,12 +78,8 @@ function Modal(props) {
     };
 
     return (
-        <div className="modal" id="modal" style={props.modalStyle}>
-            <div className="modal-backdrop"></div>
-            <div className="modal-body">
-                <button className="modal-close" id="close" onClick={props.closeModal}>
-                    <span className="sr-only">close</span>
-                </button>
+        <div>
+            <div>
                 <h1 className="text-2xl m-5 justify-self-center">Создание нового проекта</h1>
                 <Form className="flex flex-col" form={form}>
                     <Form.Item name="projectName" label="Название проекта" rules={[{ required: true }]}>
@@ -168,8 +164,8 @@ function Modal(props) {
                     </Form.Item>
                 </Form>
             </div>
-        </div >
+        </div>
     )
 }
 
-export default Modal;
+export default ProjectCreation;
