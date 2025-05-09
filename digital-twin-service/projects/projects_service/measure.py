@@ -163,7 +163,7 @@ def measure(project):
             "lambda1": f"{lambda1:.2f}", 
             "gamma1": f"{gamma1:.2f}", 
             "gamma2": f"{gamma2:.2f}", 
-            "gamma3": f"{gamma2:.2f}",
+            "gamma3": f"{gamma3:.2f}",
             "mttf": f"{mttf:.2f}",
             "pfh": f"{pfh:.2e}",
             "sil": f"{sil:.0f}" }
