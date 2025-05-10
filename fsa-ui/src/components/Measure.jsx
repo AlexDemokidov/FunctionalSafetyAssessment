@@ -94,7 +94,8 @@ function Measure(props) {
                     </div>
                 </div>
             </div >
-            <Button onClick={measureSIL}>Расчет</Button>
+            <Button onClick={measureSIL} className="mb-20">Расчет</Button>
+            {/* <Button onClick={measureSIL}>Расчет</Button> */}
             {
                 estimationData != null && <>
                     <Divider>Параметры модели PDF</Divider>

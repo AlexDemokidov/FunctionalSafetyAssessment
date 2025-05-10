@@ -50,7 +50,7 @@ function WeibullChart(props) {
 
     return (
         <div style={{ width: '100%', height: 500 }}>
-            <Divider>Функция плотности интенсивности Вейбулла</Divider>
+            <Divider>Функция плотности распределения Вейбулла</Divider>
             <ResponsiveContainer>
                 <LineChart
                     data={data}
@@ -67,7 +67,7 @@ function WeibullChart(props) {
                         label={{ value: 'Время (t)', position: 'insideBottomRight', offset: -10 }}
                     />
                     <YAxis
-                        label={{ value: 'Плотность вероятности', angle: -90, position: 'insideLeft' }}
+                        label={{ value: 'Плотность распределения', angle: -90, position: 'insideLeft', dx: -20, dy: 70 }}
                         tickFormatter={yAxisFormatter}
                     />
                     <Tooltip

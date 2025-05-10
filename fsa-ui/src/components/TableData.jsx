@@ -110,10 +110,23 @@ const EditableCell = _a => {
 
 function TableData(props) {
     const [count, setCount] = useState(3);
+
+    // локальный стейт для dataSource, чтобы его можно было корректировать
+    const [localData, setLocalData] = useState([]);
+
+    // 1. Проставляем ключи при монтировании или когда props.dataSource меняется
+    useEffect(() => {
+        const withKeys = props.dataSource.map((item, idx) => ({
+            ...item,
+            key: item.key != null ? item.key : idx + 1, // если key нет, ставим порядковый номер
+        }));
+        setLocalData(withKeys);
+    }, [props.dataSource]);
+
     const handleDelete = key => {
-        const newData = props.dataSource.filter(item => item.key !== key);
+        const newData = localData.filter(item => item.key !== key);
+        setLocalData(newData);
         props.setDataSource(newData);
-        setCount(count - 1);
     };
     const defaultColumns = [
         {
@@ -158,22 +171,26 @@ function TableData(props) {
         },
     ];
     const handleAdd = () => {
+        // находим максимальный из существующих ключей
+        const maxKey = localData.reduce((max, item) => Math.max(max, Number(item.key)), 0);
+        const nextKey = maxKey + 1;
         const newData = {
-            key: count,
+            key: nextKey,
             name: '10',
             time: '10',
             parameter1: '10',
             parameter2: '10',
             parameter3: '10'
         };
-        props.setDataSource([...props.dataSource, newData]);
-        setCount(count + 1);
+        const updated = [...localData, newData];
+        setLocalData(updated);
+        props.setDataSource(updated);
     };
     const handleSave = row => {
-        const newData = [...props.dataSource];
-        const index = newData.findIndex(item => row.key === item.key);
-        const item = newData[index];
-        newData.splice(index, 1, Object.assign(Object.assign({}, item), row));
+        const newData = [...localData];
+        const idx = newData.findIndex(item => item.key === row.key);
+        newData.splice(idx, 1, { ...newData[idx], ...row });
+        setLocalData(newData);
         props.setDataSource(newData);
     };
     const components = {
@@ -202,7 +219,7 @@ function TableData(props) {
                 components={components}
                 rowClassName={() => 'editable-row'}
                 bordered
-                dataSource={props.dataSource}
+                dataSource={localData}
                 columns={columns}
                 pagination={{
                     position: ['bottomRight'],
