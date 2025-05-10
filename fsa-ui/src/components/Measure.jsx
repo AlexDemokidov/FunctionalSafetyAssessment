@@ -65,9 +65,6 @@ function Measure(props) {
                         <h1 className="number">Номер: {project.id} </h1>
                     </div>
                     <div className="title">
-                        <h1 className="number">Проект: {project.name} </h1>
-                    </div>
-                    <div className="title">
                         <h3 className="number">Требуемый SIL: {project.sil}</h3>
                     </div>
                     <div className="title">

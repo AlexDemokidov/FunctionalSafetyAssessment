@@ -1,79 +1,81 @@
 import React, { useState } from 'react';
 import {
     DesktopOutlined,
-    FileOutlined,
     PieChartOutlined,
     TeamOutlined,
     HomeOutlined,
 } from '@ant-design/icons';
-import { Breadcrumb, Layout, Menu, theme } from 'antd';
+import { Breadcrumb, Layout, Menu, theme, Spin } from 'antd';
 import ProjectCreation from './ProjectCreation';
 import About from './About';
 import Measure from './Measure';
-import { Spin } from 'antd';
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Content, Footer, Sider } = Layout;
+
 function getItem(label, key, icon, children) {
-    return {
-        key,
-        icon,
-        children,
-        label,
-    };
+    return { key, icon, children, label };
 }
 
-
 function Main(props) {
-
-    let { projects, project } = props;
-
-    const [selectedMenuItem, setSelectedMenuItem] = useState(1);
+    const { projects, project } = props;
+    const [selectedMenuItem, setSelectedMenuItem] = useState('1');
+    const [collapsed, setCollapsed] = useState(false);
 
     const handleMenuClick = (e) => {
-        console.log('Clicked item:', e.key);
-
-        // Можно сохранить выбранный ключ в состоянии
-        setSelectedMenuItem(e.key);
-
-        // Если keyPath содержит больше одного элемента — это вложенный пункт
-        if (e.keyPath[1] == "projects") {
-            setSelectedMenuItem(3);
-
-            // console.log(e.key)
-            props.setProjectId(e.key)
-            console.log('Это вложенный пункт, родитель:', e.keyPath[1]);
+        if (e.keyPath[1] === 'projects') {
+            props.setProjectId(e.key);
+            setSelectedMenuItem('3');
+        } else {
+            setSelectedMenuItem(e.key);
         }
     };
-
-    console.log(projects)
-    console.log(project)
 
     const items = [
         getItem('Главная', '1', <HomeOutlined />),
         getItem('Создать проект', '2', <PieChartOutlined />),
-        getItem('Проекты', 'projects', <DesktopOutlined />, projects.projects.map(project => (
-            getItem(project.name, project.id))
-        )),
+        getItem(
+            'Проекты',
+            'projects',
+            <DesktopOutlined />,
+            projects.projects.map((proj) => getItem(proj.name, proj.id))
+        ),
         getItem('Контакты', '4', <TeamOutlined />),
     ];
 
-    const [collapsed, setCollapsed] = useState(false);
     const {
         token: { colorBgContainer, borderRadiusLG },
     } = theme.useToken();
 
+    const siderWidth = collapsed ? 80 : 200;
+
     return (
         <Layout style={{ minHeight: '100vh' }}>
-            <Sider collapsible collapsed={collapsed} onCollapse={value => setCollapsed(value)}>
+            <Sider
+                collapsible
+                collapsed={collapsed}
+                onCollapse={setCollapsed}
+                width={200}
+                style={{
+                    position: 'fixed',
+                    left: 0,
+                    top: 0,
+                    bottom: 0,
+                }}
+            >
                 <div className="demo-logo-vertical m-5 grid justify-items-center">
-                    <img className='w-15' src="./src/img/fsa-logo-1.png" alt="" />
+                    <img className="w-15" src="./src/img/fsa-logo-1.png" alt="Logo" />
                 </div>
-                <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} onClick={handleMenuClick} />
+                <Menu
+                    theme="dark"
+                    defaultSelectedKeys={['1']}
+                    mode="inline"
+                    items={items}
+                    onClick={handleMenuClick}
+                />
             </Sider>
-            <Layout>
-                {/* <Header style={{ padding: 0, background: colorBgContainer }} /> */}
+            <Layout style={{ marginLeft: siderWidth }}>
                 <Content style={{ margin: '0 16px' }}>
-                    {selectedMenuItem == 1 &&
+                    {selectedMenuItem === '1' && (
                         <>
                             <Breadcrumb style={{ margin: '16px 0' }}>
                                 <Breadcrumb.Item>Главная</Breadcrumb.Item>
@@ -89,8 +91,8 @@ function Main(props) {
                                 <About />
                             </div>
                         </>
-                    }
-                    {selectedMenuItem == 2 &&
+                    )}
+                    {selectedMenuItem === '2' && (
                         <>
                             <Breadcrumb style={{ margin: '16px 0' }}>
                                 <Breadcrumb.Item>Создать проект</Breadcrumb.Item>
@@ -106,11 +108,12 @@ function Main(props) {
                                 <ProjectCreation />
                             </div>
                         </>
-                    }
-                    {selectedMenuItem == 3 &&
+                    )}
+                    {selectedMenuItem === '3' && (
                         <>
                             <Breadcrumb style={{ margin: '16px 0' }}>
                                 <Breadcrumb.Item>Проект</Breadcrumb.Item>
+                                <Breadcrumb.Item>{project.name}</Breadcrumb.Item>
                             </Breadcrumb>
                             <div
                                 style={{
@@ -122,9 +125,8 @@ function Main(props) {
                             >
                                 {project ? <Measure project={project} /> : <Spin size="large" />}
                             </div>
-
                         </>
-                    }
+                    )}
                 </Content>
                 <Footer style={{ textAlign: 'center' }}>
                     Alex Demokidov Design ©{new Date().getFullYear()} Created by Alex Demokidov
@@ -132,5 +134,6 @@ function Main(props) {
             </Layout>
         </Layout>
     );
-};
+}
+
 export default Main;
