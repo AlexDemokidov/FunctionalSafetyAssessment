@@ -1,3 +1,3 @@
-﻿# digital-twin
+﻿# fsa
 
 PYTHONPATH=`pwd` alembic upgrade heads

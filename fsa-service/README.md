@@ -8,7 +8,7 @@ PYTHONPATH=`pwd`
 DB_URL=postgresql://postgres:postgres@localhost:5432/postgres
 alembic upgrade heads
 
-alex@DESKTOP-76F7GVQ:~/FunctionalSafetyAssessment/digital-twin-service$ alembic upgrade heads
+alex@DESKTOP-76F7GVQ:~/FunctionalSafetyAssessment/fsa-service$ alembic upgrade heads
 INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
 INFO  [alembic.runtime.migration] Running upgrade  -> bd1046019404, Initial migration

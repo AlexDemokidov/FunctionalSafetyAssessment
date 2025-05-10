@@ -46,7 +46,7 @@ def run_migrations_offline():
 
     url = "postgresql://postgres:postgres@localhost:5432/postgres"
 
-    # url = "postgresql://postgres:postgres@digital-twin-db:5432/postgres"
+    # url = "postgresql://postgres:postgres@fsa-db:5432/postgres"
 
     assert url is not None, 'DB_URL environment variable needed.'
 
@@ -72,7 +72,7 @@ def run_migrations_online():
 
     url = "postgresql://postgres:postgres@localhost:5432/postgres"
 
-    # url = "postgresql://postgres:postgres@digital-twin-db:5432/postgres"
+    # url = "postgresql://postgres:postgres@fsa-db:5432/postgres"
 
     assert url is not None, 'DB_URL environment variable needed.'
 
