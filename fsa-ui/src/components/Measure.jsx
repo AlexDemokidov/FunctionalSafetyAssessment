@@ -1,6 +1,6 @@
 import TableData from "./TableData.jsx";
 import WeibullChart from "./WeibullChart.jsx";
-import { Divider, Table, Button } from 'antd';
+import { Breadcrumb, Divider, Table, Button } from 'antd';
 import { useState } from "react";
 
 const columns = [
@@ -59,43 +59,54 @@ function Measure(props) {
 
     return (
         <>
-            <div className="flex flex-row justify-between m-5">
-                <div className="container">
-                    <div className="title">
-                        <h1 className="number">Номер: {project.id} </h1>
+            <div className="flex">
+                <div>
+                    <p className="number">Номер: {project.id} </p>
+                    <p className="number">Требуемый SIL: {project.sil}</p>
+                    <p className="number">Вид анализа: {project.analysis}</p>
+                    <div className="flex flex-row gap-5 mb-5">
+                        <div>
+                            <p class="mt-3 font-medium">Параметр 1</p>
+                            <p className="number">Влияние: {project.parameter1DirectlyProportional == 'true' ? 'Прямое' : 'Обратное'}</p>
+                            <p className="number">Минимальное значение: {project.parameter1Min}</p>
+                            <p className="number">Максимальное значение: {project.parameter1Max}</p>
+                        </div>
+                        <div>
+                            <p class="mt-3 font-medium">Параметр 2</p>
+                            <p className="number">Влияние: {project.parameter2DirectlyProportional == 'true' ? 'Прямое' : 'Обратное'}</p>
+                            <p className="number">Минимальное значение: {project.parameter2Min}</p>
+                            <p className="number">Максимальное значение: {project.parameter2Max}</p>
+                        </div>
+                        <div>
+                            <p class="mt-3 font-medium">Параметр 3</p>
+                            <p className="number">Влияние: {project.parameter3DirectlyProportional == 'true' ? 'Прямое' : 'Обратное'}</p>
+                            <p className="number">Минимальное значение: {project.parameter3Min}</p>
+                            <p className="number">Максимальное значение: {project.parameter3Max}</p>
+                        </div>
                     </div>
-                    <div className="title">
-                        <h3 className="number">Требуемый SIL: {project.sil}</h3>
-                    </div>
-                    <div className="title">
-                        <h3>Вид анализа: </h3>
-                        <h3 className="number">{project.analysis}</h3>
+                    <TableData dataSource={project.project}></TableData>
+                </div>
+                <div className="w-200">
+                    <div className="flex flex-col items-center">
+                        <img src="https://keenetic.ru/storage/uploads/2e607ea6-4459-4c6d-ac7f-b8ddc6bcb51d.png" ></img>
+                        <p className="font-medium text-lg">Маршрутизатор</p>
+                        <p className="font-medium text-lg">Keenetic Starter KN-1121</p>
                     </div>
                 </div>
-                <TableData dataSource={project.project}></TableData>
-            </div>
-            <button className="close__button" onClick={props.closeProject}>
-                <span className="sr">close</span>
-            </button>
+            </div >
             <Button onClick={measureSIL}>Расчет</Button>
-            {estimationData != null && <>
-                <Divider>Параметры модели PDF</Divider>
-                <Table columns={columns} dataSource={estimationData} size="small" />
-                <Divider>Результаты анализа</Divider>
-                <div className="title">
+            {
+                estimationData != null && <>
+                    <Divider>Параметры модели PDF</Divider>
+                    <Table columns={columns} dataSource={estimationData} size="small" />
+                    <Divider>Результаты анализа</Divider>
                     <h3 className="number">Средняя наработка до отказа (MTTF): {estimationData[0].mttf} ч</h3>
-                </div>
-                <div className="title">
                     <h3 className="number">Средняя частота опасных отказов (PFH): {estimationData[0].pfh} 1/ч</h3>
-                </div>
-                <div className="title">
                     <h3 className="number">Уровень полноты безопасности (SIL): {estimationData[0].sil}</h3>
-                </div>
+                    {estimationData[0].sil != project.sil ? <h3 className="text-red-500">Не соответствует требованиям функциональной безопасности</h3> : <h3 className="text-green-500">Cоответствует требованиям</h3>}
 
-                {estimationData[0].sil != project.sil ? <h3 className="text-red-500">Не соответствует требованиям функциональной безопасности</h3> : <h3 className="text-green-500">Cоответствует требованиям</h3>}
-
-                <WeibullChart inputData={estimationData}></WeibullChart>
-            </>
+                    <WeibullChart inputData={estimationData}></WeibullChart>
+                </>
             }
         </>
     )

@@ -119,12 +119,11 @@ function TableData(props) {
         {
             title: 'Номер отказа',
             dataIndex: 'key',
-            width: '5%',
+            width: '10%',
         },
         {
             title: 'Вид отказа',
             dataIndex: 'name',
-            width: '20%',
             editable: true,
         },
         {
@@ -205,9 +204,13 @@ function TableData(props) {
                 bordered
                 dataSource={props.dataSource}
                 columns={columns}
+                pagination={{
+                    position: ['bottomRight'],
+                    pageSize: 5,               // число столбцов на одной странице
+                }}
             />
             <Button onClick={handleAdd} type="primary" style={{ marginBottom: 16 }}>
-                Add a row
+                Добавить строку
             </Button>
         </div >
     );

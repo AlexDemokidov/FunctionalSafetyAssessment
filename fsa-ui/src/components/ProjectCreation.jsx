@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Form, Input, Select, Radio } from 'antd';
+import { Button, Form, Input, Select, Radio, Divider } from 'antd';
 import TableData from "./TableData.jsx";
 import axios from 'axios';
 const { Option } = Select;
@@ -105,11 +105,19 @@ function ProjectCreation() {
                                     ),
                                 },
                                 {
+                                    value: 'Dn',
+                                    label: (
+                                        <h1>Анализ DN</h1>
+                                    ),
+
+                                },
+                                {
                                     value: 'Weibayes',
                                     label: (
                                         <h1>Анализ Вейбайеса</h1>
                                     ),
-                                },
+
+                                }
                             ]}
                         />
                     </Form.Item>
@@ -119,7 +127,8 @@ function ProjectCreation() {
                             <TableData dataSource={dataSource} setDataSource={setDataSource}></TableData>
                         </>
                     }
-                    <h3>Параметр 1</h3>
+                    <Divider>Влияние диагностических параметров</Divider>
+                    <p>Параметр 1</p>
                     <Form.Item name="parameter1DirectlyProportional" rules={[{ required: true }]}>
                         <Select placeholder="Выберите влияние">
                             <Option value="true">Прямое</Option>
@@ -132,7 +141,7 @@ function ProjectCreation() {
                     <Form.Item name="parameter1Max" label="Максимум" rules={[{ required: true }]}>
                         <Input placeholder="Введите максимальное значение" />
                     </Form.Item>
-                    <h3>Параметр 2</h3>
+                    <p>Параметр 2</p>
                     <Form.Item name="parameter2DirectlyProportional" rules={[{ required: true }]}>
                         <Select placeholder="Выберите влияние">
                             <Option value="true">Прямое</Option>
@@ -145,7 +154,7 @@ function ProjectCreation() {
                     <Form.Item name="parameter2Max" label="Максимум" rules={[{ required: true }]}>
                         <Input placeholder="Введите максимальное значение" />
                     </Form.Item>
-                    <h3>Параметр 3</h3>
+                    <p>Параметр 3</p>
                     <Form.Item name="parameter3DirectlyProportional" rules={[{ required: true }]}>
                         <Select placeholder="Выберите влияние">
                             <Option value="true">Прямое</Option>
@@ -159,7 +168,6 @@ function ProjectCreation() {
                         <Input placeholder="Введите максимальное значение" />
                     </Form.Item>
                     <Form.Item>
-                        {/* <Button type="primary" onClick={props.createProject}>Создать проект</Button> */}
                         <Button type="primary" onClick={createProject}>Создать проект</Button>
                     </Form.Item>
                 </Form>

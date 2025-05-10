@@ -113,7 +113,7 @@ function Main(props) {
                         <>
                             <Breadcrumb style={{ margin: '16px 0' }}>
                                 <Breadcrumb.Item>Проект</Breadcrumb.Item>
-                                <Breadcrumb.Item>{project.name}</Breadcrumb.Item>
+                                <Breadcrumb.Item>{project ? project.name : 'Название проекта'}</Breadcrumb.Item>
                             </Breadcrumb>
                             <div
                                 style={{

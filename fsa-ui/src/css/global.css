@@ -1,51 +1,11 @@
 /* Global */
 @import "tailwindcss";
 
-html {
-	--brand-green: hsl(162, 87%, 21%);
-	--dark-green: hsl(162, 88%, 30%);
-	--medium-green: hsl(162, 73%, 46%);
-	--brand-blue: hsl(204, 75%, 26%);
-	--dark-blue: hsl(204, 70%, 53%);
-	--medium-blue: hsl(204, 54%, 62%);
-	--text-color: hsl(210, 11%, 15%);
-	--gray: hsl(210, 7%, 56%);
-	--light-gray: hsl(210, 17%, 95%);
-	--extra-light-gray: hsl(210, 17%, 98%);
-	--white: hsl(0, 0%, 100%);
-	--red: hsl(342, 63%, 46%);
-
-	box-sizing: border-box;
-	color: var(--text-color);
-	height: 100%;
-}
-
-#root {
-	height: 100%;
-}
-
-p {
-	font-size: 20px;
-	padding: 0 20px 0 4px;
-}
-
-*,
-*::before,
-*::after {
-	box-sizing: border-box;
-}
-
-body {
-	margin: 0;
-	font-family: Helvetica, Arial, sans-serif;
-	line-height: 1.4;
-	height: 100%;
-}
-
 .number {
-	font-family: 'Roboto', Arial, sans-serif;
+	font-family: Arial, sans-serif;
 }
 
+span,
 h1,
 h2,
 h3,
@@ -53,72 +13,7 @@ h4 {
 	font-family: Georgia, serif;
 }
 
-/* a {
-	color: var(--medium-green);
-
-} */
-
-/* a:visited {
-	color: var(--brand-green);
-}
-
-a:hover {
-	color: var(--brand-green);
-}
-
-a:active {
-	color: var(--red);
-} */
-
-p {
-	margin-top: 1.5em;
-	margin-bottom: 1.5em;
-}
-
-:root {
-	--color-primary: #182027;
-	--color-primary-hover: #b6b30d;
-	--color-secondary: #084217;
-	--color-text: #FAFAFA;
-	--color-link-hover: #AFB2BF;
-	--color-bg: white;
-	--color-bg-medium: #1E1F29;
-	--color-bg-light: #2E2D3D;
-	--color-stroke: #4D5064;
-	--color-footer: #101114;
-
-	--gradient: linear-gradient(93.33deg, #35ce3c 9.26%, #16a122 42.32%, #13ad20 104.58%);
-
-	--border-8: 8px;
-	--border-10: 10px;
-	--border-17: 17px;
-	--layout-width: 1172px;
-}
-
-html {
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	text-rendering: optimizeLegibility;
-}
-
-body {
-	background-color: white;
-	margin-bottom: 0;
-}
-
-section {
-	padding: 15px;
-}
-
-a {
-	text-decoration: none;
-}
-
-section {
-	display: flex;
-}
-
-.container {
-	display: flex;
-	flex-direction: column;
+th,
+td {
+	/* border: 1px solid black; */
 }
