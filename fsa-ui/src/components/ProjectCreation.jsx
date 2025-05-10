@@ -142,7 +142,7 @@ function ProjectCreation() {
                     <Form.Item name="parameter2Min" label="Минимум" rules={[{ required: true }]}>
                         <Input placeholder="Введите минимальное значение" />
                     </Form.Item>
-                    <Form.Item name="parameter2Max" label="Минимум" rules={[{ required: true }]}>
+                    <Form.Item name="parameter2Max" label="Максимум" rules={[{ required: true }]}>
                         <Input placeholder="Введите максимальное значение" />
                     </Form.Item>
                     <h3>Параметр 3</h3>
@@ -155,7 +155,7 @@ function ProjectCreation() {
                     <Form.Item name="parameter3Min" label="Минимум" rules={[{ required: true }]}>
                         <Input placeholder="Введите минимальное значение" />
                     </Form.Item>
-                    <Form.Item name="parameter3Max" label="Минимум" rules={[{ required: true }]}>
+                    <Form.Item name="parameter3Max" label="Максимум" rules={[{ required: true }]}>
                         <Input placeholder="Введите максимальное значение" />
                     </Form.Item>
                     <Form.Item>
