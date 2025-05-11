@@ -2,10 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 // import axios from 'axios';
 import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
 import { Spin } from 'antd';
-import Header from "./components/Header.jsx";
-import Projects from "./components/Projects.jsx";
-import Measure from "./components/Measure.jsx";
-import Modal from "./components/Modal.jsx";
 import Main from './components/Main.jsx';
 
 const App = () => {
