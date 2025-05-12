@@ -1,0 +1,53 @@
+{
+    "name": "Keenetic Starter",
+    "sil": "4",
+    "analysis": "Weibull",
+    "parameter1DirectlyProportional": "true",
+    "parameter1Min": "10",
+    "parameter1Max": "126",
+    "parameter2DirectlyProportional": "true",
+    "parameter2Min": "5",
+    "parameter2Max": "100",
+    "parameter3DirectlyProportional": "true",
+    "parameter3Min": "53",
+    "parameter3Max": "70",
+    "project": [
+        {
+            "name": "Перегрузка очередей пакетов",
+            "time": "12400",
+            "parameter1": "34.6",
+            "parameter2": "81.3",
+            "parameter3": "66"
+        },
+        {
+            "name": "Перегрузка очередей пакетов",
+            "time": "11000",
+            "parameter1": "34.2",
+            "parameter2": "77",
+            "parameter3": "66"
+        },
+        {
+            "name": "Перегрузка очередей пакетов",
+            "time": "9700",
+            "parameter1": "32.7",
+            "parameter2": "79",
+            "parameter3": "64"
+        },
+        {
+            "name": "Перегрев",
+            "time": "8600",
+            "parameter1": "27.5",
+            "parameter2": "20",
+            "parameter3": "69"
+        },
+        {
+            "name": "Перегрев",
+            "time": "5300",
+            "parameter1": "26.3",
+            "parameter2": "44",
+            "parameter3": "68"
+        }
+    ],
+    "id": "29050a4d-ac7c-41c1-80b8-40f45f780aa5",
+    "created": "2025-05-12T11:36:02.231243"
+}
