@@ -1,5 +1,5 @@
 import TableData from "./TableData.jsx";
-import WeibullChart from "./WeibullChart.jsx";
+import Chart from "./Chart.jsx";
 import { Breadcrumb, Divider, Table, Button } from 'antd';
 import { useState } from "react";
 
@@ -106,7 +106,7 @@ function Measure(props) {
                     <h3 className="number">Уровень полноты безопасности (SIL): {estimationData[0].sil}</h3>
                     {estimationData[0].sil != project.sil ? <h3 className="text-red-500">Не соответствует требованиям функциональной безопасности</h3> : <h3 className="text-green-500">Cоответствует требованиям</h3>}
 
-                    <WeibullChart inputData={estimationData}></WeibullChart>
+                    <Chart inputData={estimationData}></Chart>
                 </>
             }
         </>

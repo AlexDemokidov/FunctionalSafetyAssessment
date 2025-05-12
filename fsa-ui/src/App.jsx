@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-// import axios from 'axios';
 import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
 import { Spin } from 'antd';
 import Main from './components/Main.jsx';

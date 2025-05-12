@@ -8,7 +8,7 @@ const weibullPdf = (t, beta, eta) => {
     return (beta / eta) * Math.pow(t / eta, beta - 1) * Math.exp(-Math.pow(t / eta, beta));
 };
 
-function WeibullChart(props) {
+function Chart(props) {
 
     let { inputData } = props;
 
@@ -99,4 +99,4 @@ function WeibullChart(props) {
     );
 };
 
-export default WeibullChart;
+export default Chart;

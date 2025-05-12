@@ -1,3 +1,1 @@
-﻿# fsa
-
-PYTHONPATH=`pwd` alembic upgrade heads
+﻿# Functional Safety Assessment

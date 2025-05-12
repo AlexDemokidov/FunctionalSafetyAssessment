@@ -1,5 +1,4 @@
 version: "3.9"
-
 services:
 
   fsa-db:
@@ -22,14 +21,14 @@ services:
       - 8080:8080
   # fsa-ui:
   #   container_name: fsa-ui
-  #   build:  
+  #   build:
   #     context: ./fsa-ui/
   #   ports:
   #     - 5173:5173
 
   # fsa-service:
   #   container_name: fsa-service
-  #   build: 
+  #   build:
   #     context: ./fsa-service/
   #   ports:
   #     - 8000:8000
@@ -37,4 +36,3 @@ services:
   #     - fsa-db
   #   environment:
   #     DB_URL: postgresql://postgres:postgres@fsa-db:5432/postgres
-
