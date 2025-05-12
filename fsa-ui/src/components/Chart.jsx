@@ -24,8 +24,8 @@ function Chart(props) {
     // Генерация данных для графика
     const generateData = () => {
         const data = [];
-        const step = 150; // Шаг по времени
-        const maxT = 3000; // Максимальное время
+        const step = 200; // Шаг по времени
+        const maxT = 5000; // Максимальное время
 
         for (let t = 0; t <= maxT; t += step) {
             const point = { t };
