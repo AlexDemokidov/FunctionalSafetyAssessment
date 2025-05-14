@@ -104,13 +104,13 @@ function ProjectCreation() {
                                         <h1>Анализ Вейбулла</h1>
                                     ),
                                 },
-                                {
-                                    value: 'Dn',
-                                    label: (
-                                        <h1>Анализ DN</h1>
-                                    ),
+                                // {
+                                //     value: 'Dn',
+                                //     label: (
+                                //         <h1>Анализ DN</h1>
+                                //     ),
 
-                                },
+                                // },
                                 {
                                     value: 'Weibayes',
                                     label: (

@@ -1,0 +1,53 @@
+{
+    "name": "14 05",
+    "sil": "4",
+    "analysis": "Weibull",
+    "parameter1DirectlyProportional": "true",
+    "parameter1Min": "20",
+    "parameter1Max": "126",
+    "parameter2DirectlyProportional": "true",
+    "parameter2Min": "20",
+    "parameter2Max": "90",
+    "parameter3DirectlyProportional": "true",
+    "parameter3Min": "55",
+    "parameter3Max": "75",
+    "project": [
+        {
+            "name": "Перегрев",
+            "time": "20900",
+            "parameter1": "26.3",
+            "parameter2": "55",
+            "parameter3": "65"
+        },
+        {
+            "name": "Перегрев",
+            "time": "20600",
+            "parameter1": "27.5",
+            "parameter2": "45",
+            "parameter3": "67"
+        },
+        {
+            "name": "Перегрузка очередей пакетов",
+            "time": "20700",
+            "parameter1": "34.6",
+            "parameter2": "86",
+            "parameter3": "58"
+        },
+        {
+            "name": "Перегрузка очередей пакетов",
+            "time": "19400",
+            "parameter1": "34.2",
+            "parameter2": "88",
+            "parameter3": "62"
+        },
+        {
+            "name": "Перегрузка очередей пакетов",
+            "time": "25500",
+            "parameter1": "32.7",
+            "parameter2": "87",
+            "parameter3": "59"
+        }
+    ],
+    "id": "4058da04-f4f0-4273-ab15-9a6bf7fda684",
+    "created": "2025-05-14T13:39:53.904883"
+}
