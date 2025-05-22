@@ -123,7 +123,7 @@ function Main(props) {
                                     borderRadius: borderRadiusLG,
                                 }}
                             >
-                                {project ? <Measure project={project} /> : <Spin size="large" />}
+                                {project ? <Measure key={project.id} project={project} /> : <Spin size="large" />}
                             </div>
                         </>
                     )}
