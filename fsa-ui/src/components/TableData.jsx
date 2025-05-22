@@ -164,7 +164,7 @@ function TableData(props) {
             dataIndex: 'operation',
             render: (_, record) =>
                 props.dataSource.length >= 1 ? (
-                    <Popconfirm title="Удалить ?" onConfirm={() => handleDelete(record.key)}>
+                    <Popconfirm title="Удалить ?" okText="Да" cancelText="Нет" onConfirm={() => handleDelete(record.key)}>
                         <a>Удалить</a>
                     </Popconfirm>
                 ) : null,

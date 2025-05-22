@@ -1,6 +1,6 @@
 import TableData from "./TableData.jsx";
 import Chart from "./Chart.jsx";
-import { Breadcrumb, Divider, Table, Button } from 'antd';
+import { Breadcrumb, Divider, Table, Button, Popconfirm } from 'antd';
 import { useState } from "react";
 
 const columns = [
@@ -57,6 +57,21 @@ function Measure(props) {
             )
     }
 
+    const deleteProject = () => {
+        fetch(`http://localhost:8000/projects/${project.id}`, {
+            method: 'DELETE',
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                window.location.reload()
+            })
+            .catch(error => {
+                setError(error);
+            });
+    };
+
     return (
         <>
             <div className="flex">
@@ -87,6 +102,17 @@ function Measure(props) {
                     <TableData dataSource={project.project}></TableData>
                 </div>
                 <div className="w-200">
+                    <div className="flex justify-end">
+                        <Popconfirm
+                            title="Вы уверены, что хотите удалить проект?"
+                            onConfirm={deleteProject}
+                            okText="Да"
+                            cancelText="Нет"
+                        >
+                            <Button danger>Удалить проект</Button>
+                        </Popconfirm>
+                        {/* <Button onClick={deleteProject}>Удалить проект</Button> */}
+                    </div>
                     <div className="flex flex-col items-center">
                         <img src="https://keenetic.ru/storage/uploads/2e607ea6-4459-4c6d-ac7f-b8ddc6bcb51d.png" ></img>
                         <p className="font-medium text-lg">Маршрутизатор</p>
