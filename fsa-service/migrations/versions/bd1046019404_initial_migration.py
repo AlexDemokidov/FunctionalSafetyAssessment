@@ -43,7 +43,8 @@ def upgrade():
     sa.Column('parameter1', sa.String(), nullable=True),
     sa.Column('parameter2', sa.String(), nullable=True),
     sa.Column('parameter3', sa.String(), nullable=True),
-    sa.ForeignKeyConstraint(['project_id'], ['project.id'], ),
+    # sa.ForeignKeyConstraint(['project_id'], ['project.id'], ),
+    sa.ForeignKeyConstraint(['project_id'], ['project.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###

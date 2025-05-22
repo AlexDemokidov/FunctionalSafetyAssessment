@@ -29,7 +29,8 @@ class ProjectModel(Base):
     parameter3DirectlyProportional = Column(String, nullable=False)
     parameter3Min = Column(String, nullable=False)
     parameter3Max = Column(String, nullable=False)
-    items = relationship("ProjectItemModel", backref="project")
+    # items = relationship("ProjectItemModel", backref="project")
+    items = relationship("ProjectItemModel", backref="project", cascade="all, delete-orphan")
     created = Column(DateTime, default=datetime.utcnow)
 
     def dict(self):
@@ -56,7 +57,8 @@ class ProjectItemModel(Base):
     __tablename__ = "project_item"
 
     id = Column(String, primary_key=True, default=generate_uuid)
-    project_id = Column(String, ForeignKey("project.id"))
+    # project_id = Column(String, ForeignKey("project.id"))
+    project_id = Column(String, ForeignKey("project.id", ondelete="CASCADE"))
     name = Column(String, nullable=False)
     time = Column(String, nullable=False)
     parameter1 = Column(String, nullable=False)
