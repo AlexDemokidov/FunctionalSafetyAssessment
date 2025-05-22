@@ -1,9 +1,7 @@
-import React from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Divider } from 'antd';
 
 
-// Функция Weibull PDF
 const weibullPdf = (t, beta, eta) => {
     return (beta / eta) * Math.pow(t / eta, beta - 1) * Math.exp(-Math.pow(t / eta, beta));
 };
@@ -12,25 +10,20 @@ function Chart(props) {
 
     let { inputData } = props;
 
-    console.log(inputData);
-
-    // Парсим входные данные
     const beta1 = parseFloat(inputData[0].beta1);
     const eta1 = parseFloat(inputData[0].eta1);
     const beta2 = parseFloat(inputData[0].beta2);
     const eta2 = parseFloat(inputData[0].eta2);
     const lambda1 = parseFloat(inputData[0].lambda1);
 
-    // Генерация данных для графика
     const generateData = () => {
         const data = [];
-        const step = 200; // Шаг по времени
-        const maxT = 5000; // Максимальное время
+        const step = 200;
+        const maxT = 5000;
 
         for (let t = 0; t <= maxT; t += step) {
             const point = { t };
 
-            // Добавляем линии для трех наборов параметров
             point[`Mode 1`] = weibullPdf(t, beta1, eta1);
             point[`Mode 2`] = weibullPdf(t, beta2, eta2);
             point[`Mixed Mode`] = lambda1 * weibullPdf(t, beta1, eta1) + (1 - lambda1) * weibullPdf(t, beta2, eta2);
@@ -41,7 +34,6 @@ function Chart(props) {
         return data;
     };
 
-    // Кастомный форматтер для оси Y
     const yAxisFormatter = (value) => {
         return value.toExponential(2);
     };

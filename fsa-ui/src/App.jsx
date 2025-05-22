@@ -1,21 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
+import { useEffect, useState } from 'react';
 import { Spin } from 'antd';
 import Main from './components/Main.jsx';
 
 const App = () => {
 
-  const [modalStyle, setModalStyle] = useState({ display: 'none' });
-  const [fileText, setFileText] = useState()
-  const [error, setError] = useState(null);
   const [projects, setProjects] = useState(null)
   const [projectId, setProjectId] = useState("")
   const [projectData, setProjectData] = useState(null)
-  const [projectFailureRate, setProjectFailureRate] = useState(null)
-
-  const closeProject = () => {
-    setProjectId("");
-  };
 
   useEffect(() => {
     fetchProjects()
@@ -56,31 +47,6 @@ const App = () => {
       )
   }
 
-
-  const onClick = (e) => {
-    setProjectId(e.target.id);
-    console.log(e);
-    console.log('click ', e.target.id);
-  };
-
-  const deleteProject = (e) => {
-    let id = e.target.id;
-
-    const response = fetch(`http://localhost:8000/projects/${id}`, {
-      method: "DELETE",
-      headers: { "Accept": "application/json", "Content-Type": "application/json" },
-      body: JSON.stringify({
-        id
-      })
-    });
-    if (response.ok) {
-      window.location.reload()
-    }
-    else {
-      console.log(response);
-    }
-  }
-
   const measure = (e) => {
     let project = projectData.project;
     console.log(project);
@@ -95,27 +61,12 @@ const App = () => {
       })
     });
     if (response.ok) {
-      // window.location.reload()
       console.log("Обновлен");
     }
     else
       console.log(response);
 
   };
-
-  // return projectId === "" ? (
-  //   <div className='projects'>
-  //     <Header openModal={openModal} />
-  //     <Modal modalStyle={modalStyle} setFileText={setFileText} fileText={fileText} createProject={createProject} closeModal={closeModal} />
-  //     {projects ? <Projects projects={projects} onClick={onClick} deleteProject={deleteProject} /> : <Spin size="large" />}
-  //   </div>
-  // ) : (
-  //   <div>
-  //     <Header openModal={openModal} />
-  //     <Modal modalStyle={modalStyle} setFileText={setFileText} fileText={fileText} createProject={createProject} closeModal={closeModal} />
-  //     {projectData ? <Measure project={projectData} measure={measure} setProjectData={setProjectData} projectFailureRate={projectFailureRate} closeProject={closeProject} /> : <Spin size="large" />}
-  //   </div >
-  // );
 
   return (
     <>
